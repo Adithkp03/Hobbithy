@@ -6,7 +6,7 @@ export function HabitRow({ habit, days, logs, onToggle, onDelete }) {
     return (
         <div className="flex items-center border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors">
             {/* Habit Name Column */}
-            <div className="w-1/4 min-w-[200px] p-4 flex items-center justify-between sticky left-0 bg-white border-r border-slate-100 z-10">
+            <div className="w-64 flex-none p-4 flex items-center justify-between sticky left-0 bg-white border-r border-slate-100 z-10">
                 <div className="flex items-center space-x-3">
                     <div
                         className="w-3 h-3 rounded-full"

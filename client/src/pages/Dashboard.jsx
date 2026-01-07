@@ -68,7 +68,6 @@ export default function Dashboard() {
 
             // API Call
             await API.post('/logs', { habitId, date });
-            // Ideally refetch to confirm, but generic toggle returns updated log
         } catch (error) {
             console.error('Toggle failed', error);
             fetchLogs(); // Revert on error
@@ -141,49 +140,53 @@ export default function Dashboard() {
                     </Button>
                 </div>
 
-                {/* Habit Grid */}
-                <div className="bg-white rounded-xl shadow-sm border border-slate-200 flex-1 overflow-hidden flex flex-col">
-                    {/* Header Row (Dates) */}
-                    <div className="flex items-center border-b border-slate-200 bg-slate-50/50">
-                        <div className="w-1/4 min-w-[200px] p-4 font-semibold text-slate-500 text-sm sticky left-0 bg-slate-50/50 z-10 border-r border-slate-200">
-                            HABITS
-                        </div>
-                        <div className="flex-1 flex overflow-x-auto">
-                            {days.map(day => (
-                                <div key={day.toString()} className="flex-1 min-w-[40px] py-3 flex flex-col items-center justify-center border-r border-slate-200/50 last:border-0">
-                                    <span className="text-xs font-medium text-slate-400 uppercase">{format(day, 'EEE')}</span>
-                                    <span className={`text-sm font-semibold mt-1 ${format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd') ? 'text-primary-600 bg-primary-50 w-6 h-6 rounded-full flex items-center justify-center' : 'text-slate-700'}`}>
-                                        {format(day, 'd')}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Scrollable Rows */}
-                    <div className="flex-1 overflow-y-auto overflow-x-auto">
-                        {loading ? (
-                            <div className="p-12 text-center text-slate-400">Loading habits...</div>
-                        ) : habits.length === 0 ? (
-                            <div className="p-12 text-center">
-                                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-100 mb-4">
-                                    <Plus size={32} className="text-slate-400" />
-                                </div>
-                                <h3 className="text-lg font-medium text-slate-900">No habits yet</h3>
-                                <p className="text-slate-500 mt-1">Create your first habit to start tracking!</p>
+                {/* Habit Grid - Single Scroll Container */}
+                <div className="bg-white rounded-xl shadow-sm border border-slate-200 flex-1 overflow-auto relative">
+                    <div className="min-w-fit">
+                        {/* Sticky Header Row */}
+                        <div className="flex items-center border-b border-slate-200 bg-slate-50/50 sticky top-0 z-30">
+                            {/* Sticky Name Column */}
+                            <div className="w-64 flex-none p-4 font-semibold text-slate-500 text-sm sticky left-0 bg-slate-50 z-40 border-r border-slate-200 shadow-[4px_0_24px_-4px_rgba(0,0,0,0.1)]">
+                                HABITS
                             </div>
-                        ) : (
-                            habits.map(habit => (
-                                <HabitRow
-                                    key={habit._id}
-                                    habit={habit}
-                                    days={days}
-                                    logs={logs}
-                                    onToggle={handleToggle}
-                                    onDelete={handleDeleteHabit}
-                                />
-                            ))
-                        )}
+                            {/* Scrollable Dates Header */}
+                            <div className="flex-1 flex bg-slate-50/50">
+                                {days.map(day => (
+                                    <div key={day.toString()} className="flex-1 min-w-[40px] py-3 flex flex-col items-center justify-center border-r border-slate-200/50 last:border-0 bg-slate-50/50">
+                                        <span className="text-xs font-medium text-slate-400 uppercase">{format(day, 'EEE')}</span>
+                                        <span className={`text-sm font-semibold mt-1 ${format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd') ? 'text-primary-600 bg-primary-50 w-6 h-6 rounded-full flex items-center justify-center' : 'text-slate-700'}`}>
+                                            {format(day, 'd')}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Scrollable Rows (Body) */}
+                        <div className="divide-y divide-slate-100">
+                            {loading ? (
+                                <div className="p-12 text-center text-slate-400">Loading habits...</div>
+                            ) : habits.length === 0 ? (
+                                <div className="p-12 text-center">
+                                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-100 mb-4">
+                                        <Plus size={32} className="text-slate-400" />
+                                    </div>
+                                    <h3 className="text-lg font-medium text-slate-900">No habits yet</h3>
+                                    <p className="text-slate-500 mt-1">Create your first habit to start tracking!</p>
+                                </div>
+                            ) : (
+                                habits.map(habit => (
+                                    <HabitRow
+                                        key={habit._id}
+                                        habit={habit}
+                                        days={days}
+                                        logs={logs}
+                                        onToggle={handleToggle}
+                                        onDelete={handleDeleteHabit}
+                                    />
+                                ))
+                            )}
+                        </div>
                     </div>
                 </div>
             </main>
