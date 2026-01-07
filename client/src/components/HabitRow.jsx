@@ -1,4 +1,5 @@
 import { Check } from 'lucide-react';
+import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import { formatDateKey } from '../utils/dateUtils';
 
@@ -35,21 +36,33 @@ export function HabitRow({ habit, days, logs, onToggle, onDelete }) {
                             key={dateKey}
                             className="flex-1 min-w-[40px] h-14 flex items-center justify-center border-r border-slate-50 last:border-0"
                         >
-                            <button
+                            <motion.button
+                                whileTap={{ scale: 0.9 }}
+                                initial={false}
+                                animate={{
+                                    backgroundColor: isCompleted ? habit.color : '#f1f5f9',
+                                    scale: isCompleted ? 1 : 1
+                                }}
                                 onClick={() => onToggle(habit._id, dateKey)}
                                 className={clsx(
-                                    "w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200",
-                                    isCompleted
-                                        ? "bg-opacity-10 text-white transform scale-100"
-                                        : "bg-slate-100 text-transparent hover:bg-slate-200"
+                                    "w-8 h-8 rounded-full flex items-center justify-center transition-colors",
+                                    !isCompleted && "text-transparent hover:bg-slate-200"
                                 )}
                                 style={{
-                                    backgroundColor: isCompleted ? habit.color : undefined,
                                     color: isCompleted ? 'white' : 'transparent'
                                 }}
                             >
-                                <Check size={16} strokeWidth={3} />
-                            </button>
+                                <motion.div
+                                    initial={false}
+                                    animate={{
+                                        scale: isCompleted ? 1 : 0,
+                                        opacity: isCompleted ? 1 : 0
+                                    }}
+                                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                >
+                                    <Check size={16} strokeWidth={3} />
+                                </motion.div>
+                            </motion.button>
                         </div>
                     );
                 })}

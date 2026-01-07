@@ -1,12 +1,15 @@
 import { useState, useEffect, useContext } from 'react';
 import { format, addMonths, subMonths } from 'date-fns';
-import { ChevronLeft, ChevronRight, Plus, LogOut } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, Plus, LogOut, BarChart2 } from 'lucide-react';
 import AuthContext from '../context/AuthContext';
 import API from '../api/axios';
 import { Button } from '../components/Button';
 import { HabitRow } from '../components/HabitRow';
 import { AddHabitModal } from '../components/AddHabitModal';
+
 import { getDaysInMonth, formatDateKey } from '../utils/dateUtils';
+import logo from '../assets/logo.jpg';
 
 export default function Dashboard() {
     const { user, logout } = useContext(AuthContext);
@@ -103,9 +106,7 @@ export default function Dashboard() {
                 <div className="max-w-full px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex items-center space-x-2">
-                            <div className="bg-primary-600 p-2 rounded-lg">
-                                <span className="text-white font-bold text-xl">H</span>
-                            </div>
+                            <img src={logo} alt="Hobbithy" className="w-10 h-10 rounded-lg object-cover" />
                             <span className="text-xl font-bold text-slate-900 tracking-tight">Hobbithy</span>
                         </div>
                         <div className="flex items-center space-x-6">
@@ -134,10 +135,18 @@ export default function Dashboard() {
                         </button>
                     </div>
 
-                    <Button onClick={() => setIsModalOpen(true)} className="shadow-sm shadow-primary-500/30">
-                        <Plus size={20} className="mr-2" />
-                        New Habit
-                    </Button>
+                    <div className="flex items-center space-x-3">
+                        <Link to="/analytics">
+                            <Button variant="outline" className="flex items-center gap-2">
+                                <BarChart2 size={20} />
+                                <span className="hidden sm:inline">Analytics</span>
+                            </Button>
+                        </Link>
+                        <Button onClick={() => setIsModalOpen(true)} className="shadow-sm shadow-primary-500/30">
+                            <Plus size={20} className="mr-2" />
+                            New Habit
+                        </Button>
+                    </div>
                 </div>
 
                 {/* Habit Grid - Single Scroll Container */}
