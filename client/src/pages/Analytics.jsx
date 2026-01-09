@@ -44,7 +44,7 @@ export default function Analytics() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <StatsCard title="Total Habits" value={data?.stats?.totalHabits || 0} />
                     <StatsCard title="Total Completions" value={data?.stats?.totalLogs || 0} />
-                    <StatsCard title="Completion Rate" value="-" />
+                    <StatsCard title="Completion Rate" value={data?.stats?.completionRate || "-"} />
                 </div>
 
                 {/* Chart Section */}

@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Analytics from './pages/Analytics';
+import ReflectionsHistory from './pages/ReflectionsHistory';
 import { useContext } from 'react';
 import AuthContext from './context/AuthContext';
 
@@ -39,6 +40,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Analytics />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/reflections"
+            element={
+              <ProtectedRoute>
+                <ReflectionsHistory />
               </ProtectedRoute>
             }
           />

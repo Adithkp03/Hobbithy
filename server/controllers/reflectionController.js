@@ -83,7 +83,22 @@ const getLatestReflection = async (req, res) => {
     }
 };
 
+// @desc    Get all reflections for user
+// @route   GET /reflections
+// @access  Private
+const getReflections = async (req, res) => {
+    try {
+        const reflections = await Reflection.find({ userId: req.user.id })
+            .sort({ weekStartDate: -1 });
+        res.json(reflections);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
 module.exports = {
     createReflection,
-    getLatestReflection
+    getLatestReflection,
+    getReflections
 };

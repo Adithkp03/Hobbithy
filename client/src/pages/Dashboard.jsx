@@ -222,6 +222,11 @@ export default function Dashboard() {
                                 <span className="hidden sm:inline">Analytics</span>
                             </Button>
                         </Link>
+                        <Link to="/reflections">
+                            <Button variant="outline" className="flex items-center gap-2">
+                                <span className="hidden sm:inline">History</span>
+                            </Button>
+                        </Link>
                         <Button onClick={() => setIsModalOpen(true)} className="shadow-sm shadow-primary-500/30">
                             <Plus size={20} className="mr-2" />
                             New Habit

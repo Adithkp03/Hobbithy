@@ -1,6 +1,6 @@
 const Log = require('../models/HabitLog');
 const Habit = require('../models/Habit');
-const { startOfMonth, endOfMonth, subMonths, format } = require('date-fns');
+const { startOfMonth, endOfMonth, subMonths, format, differenceInCalendarDays } = require('date-fns');
 
 // Get generic analytics (streaks, completion rates)
 exports.getAnalytics = async (req, res) => {
@@ -56,10 +56,20 @@ exports.getAnalytics = async (req, res) => {
             };
         });
 
+        // 3. Completion Rate (Month to Date)
+        const daysInMonthSoFar = differenceInCalendarDays(now, start) + 1;
+        const totalPossibleLogs = habits.length * daysInMonthSoFar;
+
+        let completionRate = 0;
+        if (totalPossibleLogs > 0) {
+            completionRate = Math.round((totalLogs / totalPossibleLogs) * 100);
+        }
+
         res.json({
             stats: {
                 totalHabits: habits.length,
-                totalLogs: totalLogs
+                totalLogs: totalLogs,
+                completionRate: completionRate + '%'
             },
             habitPerformance: analyticsData
         });
