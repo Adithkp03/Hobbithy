@@ -10,7 +10,16 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to Database
-connectDB();
+// Connect to Database Middleware for Serverless
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        console.error("Database Connection Failed:", error);
+        res.status(500).json({ message: "Database connection failed", error: error.message });
+    }
+});
 
 // Routes
 const authRoutes = require('./routes/authRoutes');

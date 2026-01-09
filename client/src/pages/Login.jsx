@@ -19,6 +19,14 @@ export default function Login() {
             navigate('/dashboard');
         } catch (err) {
             setError(err.response?.data?.message || 'Login failed');
+            console.error("Login Error details:", {
+                message: err.message,
+                response: err.response,
+                config: err.config
+            });
+            if (!err.response) {
+                setError(`Network Error: Is the backend running? (${import.meta.env.VITE_API_URL})`);
+            }
         }
     };
 
