@@ -25,8 +25,15 @@ app.use('/logs', logRoutes);
 app.use('/analytics', analyticsRoutes);
 app.use('/reflections', reflectionRoutes);
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+app.get('/', (req, res) => {
+    res.send('Hobbithy API is running');
 });
+
+const PORT = process.env.PORT || 5000;
+30:
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+module.exports = app;
