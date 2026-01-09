@@ -17,11 +17,13 @@ const authRoutes = require('./routes/authRoutes');
 const habitRoutes = require('./routes/habitRoutes');
 const logRoutes = require('./routes/logRoutes');
 const analyticsRoutes = require('./routes/analyticsRoutes');
+const reflectionRoutes = require('./routes/reflectionRoutes');
 
 app.use('/auth', authRoutes);
 app.use('/habits', habitRoutes);
 app.use('/logs', logRoutes);
 app.use('/analytics', analyticsRoutes);
+app.use('/reflections', reflectionRoutes);
 
 const PORT = process.env.PORT || 5000;
 

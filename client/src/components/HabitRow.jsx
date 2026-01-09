@@ -1,9 +1,9 @@
-import { Check } from 'lucide-react';
+import { Check, MessageSquare } from 'lucide-react';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import { formatDateKey } from '../utils/dateUtils';
 
-export function HabitRow({ habit, days, logs, onToggle, onDelete, isBadDay }) {
+export function HabitRow({ habit, days, logs, onToggle, onDelete, isBadDay, onAddNote }) {
     return (
         <div className="flex items-center border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors">
             {/* Habit Name Column */}
@@ -69,7 +69,7 @@ export function HabitRow({ habit, days, logs, onToggle, onDelete, isBadDay }) {
                                 }}
                                 onClick={() => onToggle(habit._id, dateKey)}
                                 className={clsx(
-                                    "w-8 h-8 rounded-full flex items-center justify-center transition-colors shadow-sm",
+                                    "w-8 h-8 rounded-full flex items-center justify-center transition-colors shadow-sm group relative",
                                     score === 0 && "text-transparent hover:bg-slate-200 shadow-none"
                                 )}
                                 style={{
@@ -84,10 +84,13 @@ export function HabitRow({ habit, days, logs, onToggle, onDelete, isBadDay }) {
                                     }}
                                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
                                 >
-                                    {/* Icon based on score? For now checkmark for all or maybe different icons? */}
-                                    {/* Part 1 says "Clear visual distinction". Colors do that. */}
                                     <Check size={16} strokeWidth={3} />
                                 </motion.div>
+
+                                {/* Memo / Note Indicator */}
+                                {log?.note && (
+                                    <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-blue-500 border border-white rounded-full z-10" />
+                                )}
                             </motion.button>
                         </div>
                     );

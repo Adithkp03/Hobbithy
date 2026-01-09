@@ -10,6 +10,7 @@ import { AddHabitModal } from '../components/AddHabitModal';
 
 import { getDaysInMonth, formatDateKey } from '../utils/dateUtils';
 import logo from '../assets/logo.jpg';
+import { ReflectionModal } from '../components/ReflectionModal';
 
 export default function Dashboard() {
     const [user, setUser] = useState(useContext(AuthContext).user);
@@ -19,6 +20,7 @@ export default function Dashboard() {
     const [logs, setLogs] = useState([]);
     const [dayLog, setDayLog] = useState({ isBadDay: false, note: '' }); // Bad Day State
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isReflectionOpen, setIsReflectionOpen] = useState(false);
     const [loading, setLoading] = useState(true);
 
     const days = getDaysInMonth(currentDate);
@@ -48,14 +50,6 @@ export default function Dashboard() {
     // Fetch Day Log (Bad Day Status)
     const fetchDayLog = async () => {
         try {
-            const dateKey = formatDateKey(new Date()); // Always check "today" for the bad day toggle context, or the currently viewed date? 
-            // Usually "Bad Day" is for "Today". 
-            // Let's assume we toggle it for the *current real day*, not the viewed month's random day.
-            // But if I view yesterday, can I mark it as Bad Day?
-            // Let's stick to "Today" or the date selected if we had day selection. 
-            // For now simplest is fetch for *today* or sync to `currentDate` if we show a single day view.
-            // But this is a Monthly view dashboard.
-            // Let's assume the toggle is for *Today* (or whatever date "today" is).
             const today = formatDateKey(new Date());
             const res = await API.get(`/logs/day?date=${today}`);
             setDayLog(res.data);
@@ -64,14 +58,39 @@ export default function Dashboard() {
         }
     };
 
+    // Check for Due Reflection
+    const checkReflectionStatus = async () => {
+        try {
+            const res = await API.get('/reflections/latest');
+            if (res.data.isDue) {
+                // Add a small delay so it doesn't pop up instantly on login
+                setTimeout(() => setIsReflectionOpen(true), 1500);
+            }
+        } catch (error) {
+            console.error('Error checking reflection status:', error);
+        }
+    };
+
     useEffect(() => {
         const loadData = async () => {
             setLoading(true);
             await Promise.all([fetchHabits(), fetchLogs(), fetchDayLog()]);
+            await checkReflectionStatus();
             setLoading(false);
         };
         loadData();
     }, [currentDate]);
+
+    // Handle Reflection Submission
+    const handleReflectionSubmit = async (answers) => {
+        try {
+            await API.post('/reflections', { answers });
+            setIsReflectionOpen(false);
+            // Could show a success toast here
+        } catch (error) {
+            console.error('Error submitting reflection:', error);
+        }
+    };
 
     // Handle Toggle (Cycle: Empty -> 100 -> 50 -> 25 -> Empty)
     const handleToggle = async (habitId, date) => {
@@ -266,6 +285,12 @@ export default function Dashboard() {
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 onAdd={handleAddHabit}
+            />
+
+            <ReflectionModal
+                isOpen={isReflectionOpen}
+                onClose={() => setIsReflectionOpen(false)}
+                onSubmit={handleReflectionSubmit}
             />
         </div>
     );
