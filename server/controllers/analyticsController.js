@@ -21,7 +21,10 @@ exports.getAnalytics = async (req, res) => {
                 $match: {
                     habitId: { $in: habitIds },
                     date: { $gte: FormatDate(start), $lte: FormatDate(end) },
-                    status: true
+                    $or: [
+                        { score: { $gt: 0 } },
+                        { status: true }
+                    ]
                 }
             },
             {
@@ -37,7 +40,10 @@ exports.getAnalytics = async (req, res) => {
         // or just return the "current streak" if we were tracking it on the Habit model
         // For now, let's just return the raw counts and maybe total logs
 
-        const totalLogs = await Log.countDocuments({ habitId: { $in: habitIds }, status: true });
+        const totalLogs = await Log.countDocuments({
+            habitId: { $in: habitIds },
+            $or: [{ score: { $gt: 0 } }, { status: true }]
+        });
 
         // Map data specific to habits
         const analyticsData = habits.map(habit => {

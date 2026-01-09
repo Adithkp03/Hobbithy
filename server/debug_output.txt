@@ -1,0 +1,15 @@
+Range: 2026-01-01 to 2026-01-31
+
+--- HABIT STATS (DB Query) ---
+[Wake up at 6:30 am] ID: 695defccfc81317acc7cba12 -> Count: 5
+   ALL Logs: [2026-01-01] S:100 St:undefined, [2026-01-02] S:100 St:undefined, [2026-01-03] S:100 St:undefined, [2026-01-06] S:100 St:undefined, [2026-01-07] S:50 St:undefined
+[Breakfast] ID: 695df131fc81317acc7cba41 -> Count: 2
+[College] ID: 695df17cfc81317acc7cba44 -> Count: 3
+[Band practice] ID: 695df1abfc81317acc7cba47 -> Count: 2
+[DSA] ID: 695df1c4fc81317acc7cba4a -> Count: 0
+[DEV] ID: 695df1c9fc81317acc7cba4d -> Count: 2
+[Family time] ID: 695df212fc81317acc7cba59 -> Count: 2
+   ALL Logs: [2026-01-06] S:100 St:undefined, [2026-01-07] S:100 St:undefined
+[breakfast] ID: 695e947f0b033039d8adc93f -> Count: 8
+[bath] ID: 695e94860b033039d8adc942 -> Count: 6
+[class] ID: 695e948e0b033039d8adc945 -> Count: 5

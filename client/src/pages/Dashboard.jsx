@@ -12,10 +12,12 @@ import { getDaysInMonth, formatDateKey } from '../utils/dateUtils';
 import logo from '../assets/logo.jpg';
 
 export default function Dashboard() {
-    const { user, logout } = useContext(AuthContext);
+    const [user, setUser] = useState(useContext(AuthContext).user);
+    const { logout } = useContext(AuthContext);
     const [currentDate, setCurrentDate] = useState(new Date());
     const [habits, setHabits] = useState([]);
     const [logs, setLogs] = useState([]);
+    const [dayLog, setDayLog] = useState({ isBadDay: false, note: '' }); // Bad Day State
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(true);
 
@@ -43,37 +45,85 @@ export default function Dashboard() {
         }
     };
 
+    // Fetch Day Log (Bad Day Status)
+    const fetchDayLog = async () => {
+        try {
+            const dateKey = formatDateKey(new Date()); // Always check "today" for the bad day toggle context, or the currently viewed date? 
+            // Usually "Bad Day" is for "Today". 
+            // Let's assume we toggle it for the *current real day*, not the viewed month's random day.
+            // But if I view yesterday, can I mark it as Bad Day?
+            // Let's stick to "Today" or the date selected if we had day selection. 
+            // For now simplest is fetch for *today* or sync to `currentDate` if we show a single day view.
+            // But this is a Monthly view dashboard.
+            // Let's assume the toggle is for *Today* (or whatever date "today" is).
+            const today = formatDateKey(new Date());
+            const res = await API.get(`/logs/day?date=${today}`);
+            setDayLog(res.data);
+        } catch (error) {
+            console.error('Error fetching day log:', error);
+        }
+    };
+
     useEffect(() => {
         const loadData = async () => {
             setLoading(true);
-            await Promise.all([fetchHabits(), fetchLogs()]);
+            await Promise.all([fetchHabits(), fetchLogs(), fetchDayLog()]);
             setLoading(false);
         };
         loadData();
     }, [currentDate]);
 
+    // Handle Toggle (Cycle: Empty -> 100 -> 50 -> 25 -> Empty)
     const handleToggle = async (habitId, date) => {
         try {
-            // Optimistic update
             const existingLog = logs.find(l => l.habitId === habitId && l.date === date);
-            let newLogs;
 
-            if (existingLog) {
-                newLogs = logs.map(l =>
-                    l.habitId === habitId && l.date === date
-                        ? { ...l, status: !l.status }
-                        : l
-                );
+            // Calculate next score
+            let nextScore;
+            // Handle legacy "status: true" as 100
+            const currentScore = existingLog ? (existingLog.score !== undefined ? existingLog.score : (existingLog.status ? 100 : 0)) : 0;
+
+            if (currentScore === 0) nextScore = 100;      // Empty -> Full
+            else if (currentScore === 100) nextScore = 50; // Full -> Partial
+            else if (currentScore === 50) nextScore = 25;  // Partial -> Blocked
+            else if (currentScore === 25) nextScore = 0;   // Blocked -> Empty
+            else nextScore = 100; // Fallback
+
+            // Optimistic Update
+            let newLogs;
+            if (nextScore === 0) {
+                // Remove log
+                newLogs = logs.filter(l => !(l.habitId === habitId && l.date === date));
             } else {
-                newLogs = [...logs, { habitId, date, status: true }];
+                if (existingLog) {
+                    newLogs = logs.map(l =>
+                        l.habitId === habitId && l.date === date
+                            ? { ...l, score: nextScore, status: undefined } // clear legacy status
+                            : l
+                    );
+                } else {
+                    newLogs = [...logs, { habitId, date, score: nextScore }];
+                }
             }
             setLogs(newLogs);
 
             // API Call
-            await API.post('/logs', { habitId, date });
+            await API.post('/logs', { habitId, date, score: nextScore });
         } catch (error) {
             console.error('Toggle failed', error);
             fetchLogs(); // Revert on error
+        }
+    };
+
+    const toggleBadDay = async () => {
+        try {
+            const today = formatDateKey(new Date());
+            const nextState = !dayLog.isBadDay;
+            setDayLog({ ...dayLog, isBadDay: nextState });
+            await API.post('/logs/day', { date: today, isBadDay: nextState });
+        } catch (error) {
+            console.error('Toggle Bad Day failed', error);
+            fetchDayLog();
         }
     };
 
@@ -136,6 +186,17 @@ export default function Dashboard() {
                     </div>
 
                     <div className="flex items-center space-x-3">
+                        <div className="flex items-center mr-4">
+                            <span className={`text-sm font-medium mr-2 transition-colors ${dayLog.isBadDay ? 'text-orange-600' : 'text-slate-500'}`}>
+                                {dayLog.isBadDay ? '❤️ Healing Mode' : 'Bad Day?'}
+                            </span>
+                            <button
+                                onClick={toggleBadDay}
+                                className={`w-12 h-6 rounded-full p-1 transition-colors duration-200 ease-in-out ${dayLog.isBadDay ? 'bg-orange-200' : 'bg-slate-200'}`}
+                            >
+                                <div className={`w-4 h-4 rounded-full bg-white shadow-sm transform transition-transform duration-200 ${dayLog.isBadDay ? 'translate-x-6 bg-orange-500' : 'translate-x-0'}`} />
+                            </button>
+                        </div>
                         <Link to="/analytics">
                             <Button variant="outline" className="flex items-center gap-2">
                                 <BarChart2 size={20} />
@@ -192,6 +253,7 @@ export default function Dashboard() {
                                         logs={logs}
                                         onToggle={handleToggle}
                                         onDelete={handleDeleteHabit}
+                                        isBadDay={dayLog.isBadDay}
                                     />
                                 ))
                             )}

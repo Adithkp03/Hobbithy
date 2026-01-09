@@ -15,9 +15,15 @@ const habitLogSchema = new mongoose.Schema({
         type: String, // YYYY-MM-DD
         required: true
     },
-    status: {
-        type: Boolean,
-        default: true
+    score: {
+        type: Number,
+        enum: [0, 25, 50, 100],
+        default: 100,
+        required: true
+    },
+    note: {
+        type: String,
+        required: false
     }
 }, {
     timestamps: true

@@ -1,11 +1,12 @@
 const HabitLog = require('../models/HabitLog');
+const DayLog = require('../models/DayLog');
 const Habit = require('../models/Habit');
 
-// @desc    Toggle habit completion log
+// @desc    Toggle habit completion log (score based)
 // @route   POST /logs
 // @access  Private
 const toggleLog = async (req, res) => {
-    const { habitId, date } = req.body;
+    const { habitId, date, score } = req.body;
 
     if (!habitId || !date) {
         return res.status(400).json({ message: 'Please add habitId and date' });
@@ -25,35 +26,65 @@ const toggleLog = async (req, res) => {
     });
 
     if (log) {
-        // Toggle status or delete if untoggling? 
-        // User requirment says "Track completion as boolean". 
-        // Usually toggling means if true -> remove or false.
-        // Let's assume if it exists, we toggle the boolean status. 
-        // Or if the user sends a specific status?
-        // Let's implement toggle logic: if exists and status is true, set to false (or delete).
-        // A cleaner approach for simple boolean tracking is: existence = done.
-        // But schema has `status` field.
-        // Let's support explicit status if provided, else toggle.
-
-        if (req.body.status !== undefined) {
-            log.status = req.body.status;
+        // Update score if provided
+        if (score !== undefined) {
+            log.score = score;
             await log.save();
         } else {
-            // If no status provided, toggle it
-            log.status = !log.status;
-            await log.save();
+            // Cycle logic if no score provided (Legacy/Simple toggle support)
+            // If it exists (assumed 100 or >0), remove it
+            await log.deleteOne();
+            return res.json({ message: 'Log removed', habitId, date });
         }
     } else {
         // Create new log
+        // Default score to 100 if not provided
         log = await HabitLog.create({
             userId: req.user.id,
             habitId,
             date,
-            status: req.body.status !== undefined ? req.body.status : true
+            score: score !== undefined ? score : 100
         });
     }
 
     res.status(200).json(log);
+};
+
+// @desc    Get day log (Bad Day status)
+// @route   GET /logs/day
+// @access  Private
+const getDayLog = async (req, res) => {
+    const { date } = req.query;
+    if (!date) return res.status(400).json({ message: 'Date required' });
+
+    const log = await DayLog.findOne({ userId: req.user.id, date });
+    res.json(log || { isBadDay: false });
+};
+
+// @desc    Update day log (Bad Day status)
+// @route   POST /logs/day
+// @access  Private
+const updateDayLog = async (req, res) => {
+    const { date, isBadDay, note } = req.body;
+
+    if (!date) return res.status(400).json({ message: 'Date required' });
+
+    let log = await DayLog.findOne({ userId: req.user.id, date });
+
+    if (log) {
+        if (isBadDay !== undefined) log.isBadDay = isBadDay;
+        if (note !== undefined) log.note = note;
+        await log.save();
+    } else {
+        log = await DayLog.create({
+            userId: req.user.id,
+            date,
+            isBadDay: isBadDay || false,
+            note: note || ''
+        });
+    }
+
+    res.json(log);
 };
 
 // @desc    Get logs for a specific period
@@ -74,14 +105,7 @@ const getMonthlyLogs = async (req, res) => {
     const { year, month } = req.query;
     if (!year || !month) return res.status(400).json({ message: 'Year and month required' });
 
-    // Construct date strings
-    const startDate = `${year}-${month.toString().padStart(2, '0')}-01`;
-    // End date: tricky with days in month, but since we use string comparison and we want the whole month:
-    // We can just look for dates starting with "YYYY-MM-"
-    // Or use $regex. 
-    // String comparison: "2023-01-01" to "2023-01-31"
-
-    // Easy Regex approach for YYYY-MM
+    // Regex match for YYYY-MM
     const logs = await HabitLog.find({
         userId: req.user.id,
         date: { $regex: `^${year}-${month.toString().padStart(2, '0')}` }
@@ -95,27 +119,8 @@ const getMonthlyLogs = async (req, res) => {
 // @access  Private
 // Query: ?startDate=YYYY-MM-DD
 const getWeeklyLogs = async (req, res) => {
-    const { startDate } = req.query;
+    const { startDate, endDate } = req.query;
     if (!startDate) return res.status(400).json({ message: 'Start date required' });
-
-    // Calculate end date (start + 6 days) or just user provided range
-    // For simplicity, let's assume client sends start and end or we just fetch 7 days.
-    // Let's adhere to "week" semantics.
-    // Actually, simple string range query works best if client provides range.
-    // If stricly /logs/week, maybe client says "week of...".
-    // I'll assume client sends `startDate` and `endDate` to be safe, or I calculate.
-    // Let's start with just generic range support or specific week logic if needed.
-    // Requirement: "Daily habit check-ins" and "Weekly bar charts".
-    // I'll just use a generic range query support via helper or specific logic.
-
-    // Implementation: accept startDate and endDate
-    // If only startDate is given, assume +7 days? No, standard is client defines range.
-    // But route is /logs/week. Let's make it accept start and end date query params.
-
-    const { endDate } = req.query;
-    // If client wants a specific week, they provide the range. 
-    // If backend must calculate, I'd need moment or date-fns. 
-    // I'll expect client to pass range ?start=YYYY-MM-DD&end=YYYY-MM-DD
 
     if (startDate && endDate) {
         const logs = await HabitLog.find({
@@ -146,6 +151,8 @@ const getYearlyLogs = async (req, res) => {
 
 module.exports = {
     toggleLog,
+    getDayLog,
+    updateDayLog,
     getMonthlyLogs,
     getWeeklyLogs,
     getYearlyLogs
