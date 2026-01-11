@@ -34,6 +34,11 @@ app.use('/logs', logRoutes);
 app.use('/analytics', analyticsRoutes);
 app.use('/reflections', reflectionRoutes);
 
+
+app.get('/api/health', (req, res) => {
+    res.status(200).json({ status: "ok" });
+});
+
 app.get('/', (req, res) => {
     res.send('Hobbithy API is running');
 });

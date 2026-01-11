@@ -8,11 +8,23 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const storedUser = JSON.parse(localStorage.getItem('user'));
-        if (storedUser) {
-            setUser(storedUser);
-        }
-        setLoading(false);
+        const initAuth = async () => {
+            // Wake up backend
+            try {
+                await API.get('/api/health'); // Simple wake-up call
+            } catch (error) {
+                console.error("Backend wake-up failed:", error);
+                // Continue to auth check even if wake-up fails (offline handling etc)
+            }
+
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            if (storedUser) {
+                setUser(storedUser);
+            }
+            setLoading(false);
+        };
+
+        initAuth();
     }, []);
 
     const login = async (email, password) => {
