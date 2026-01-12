@@ -1,4 +1,4 @@
-import { Check, MessageSquare } from 'lucide-react';
+import { Check, MessageSquare, Trash2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import { formatDateKey } from '../utils/dateUtils';
@@ -17,10 +17,10 @@ export function HabitRow({ habit, days, logs, onToggle, onDelete, isBadDay, onAd
                 </div>
                 <button
                     onClick={() => onDelete(habit._id)}
-                    className="text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="p-1.5 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors"
                     title="Delete Habit"
                 >
-                    &times;
+                    <Trash2 size={16} />
                 </button>
             </div>
 

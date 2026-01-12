@@ -20,6 +20,11 @@ const habitSchema = new mongoose.Schema({
         type: Number, // e.g. 7 for everyday, or specific goal
         default: 7
     },
+    frequency: {
+        type: String,
+        enum: ['daily', 'weekly'],
+        default: 'daily'
+    },
 }, {
     timestamps: true
 });

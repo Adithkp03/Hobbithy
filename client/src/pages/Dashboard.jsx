@@ -1,14 +1,14 @@
 import { useState, useEffect, useContext } from 'react';
-import { format, addMonths, subMonths } from 'date-fns';
+import { format, addMonths, subMonths, isSameWeek } from 'date-fns';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Plus, LogOut, BarChart2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, LogOut, BarChart2, Check, Trash2 } from 'lucide-react';
 import AuthContext from '../context/AuthContext';
 import API from '../api/axios';
 import { Button } from '../components/Button';
 import { HabitRow } from '../components/HabitRow';
 import { AddHabitModal } from '../components/AddHabitModal';
 
-import { getDaysInMonth, formatDateKey } from '../utils/dateUtils';
+import { getDaysInMonth, formatDateKey, getWeeksInMonth } from '../utils/dateUtils';
 import logo from '../assets/logo.jpg';
 import { ReflectionModal } from '../components/ReflectionModal';
 
@@ -18,12 +18,15 @@ export default function Dashboard() {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [habits, setHabits] = useState([]);
     const [logs, setLogs] = useState([]);
-    const [dayLog, setDayLog] = useState({ isBadDay: false, note: '' }); // Bad Day State
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isReflectionOpen, setIsReflectionOpen] = useState(false);
     const [loading, setLoading] = useState(true);
 
     const days = getDaysInMonth(currentDate);
+    const weeks = getWeeksInMonth(currentDate);
+
+    const dailyHabits = habits.filter(h => !h.frequency || h.frequency === 'daily');
+    const weeklyHabits = habits.filter(h => h.frequency === 'weekly');
 
     // Fetch Habits
     const fetchHabits = async () => {
@@ -47,16 +50,7 @@ export default function Dashboard() {
         }
     };
 
-    // Fetch Day Log (Bad Day Status)
-    const fetchDayLog = async () => {
-        try {
-            const today = formatDateKey(new Date());
-            const res = await API.get(`/logs/day?date=${today}`);
-            setDayLog(res.data);
-        } catch (error) {
-            console.error('Error fetching day log:', error);
-        }
-    };
+
 
     // Check for Due Reflection
     const checkReflectionStatus = async () => {
@@ -74,7 +68,7 @@ export default function Dashboard() {
     useEffect(() => {
         const loadData = async () => {
             setLoading(true);
-            await Promise.all([fetchHabits(), fetchLogs(), fetchDayLog()]);
+            await Promise.all([fetchHabits(), fetchLogs()]);
             await checkReflectionStatus();
             setLoading(false);
         };
@@ -134,17 +128,7 @@ export default function Dashboard() {
         }
     };
 
-    const toggleBadDay = async () => {
-        try {
-            const today = formatDateKey(new Date());
-            const nextState = !dayLog.isBadDay;
-            setDayLog({ ...dayLog, isBadDay: nextState });
-            await API.post('/logs/day', { date: today, isBadDay: nextState });
-        } catch (error) {
-            console.error('Toggle Bad Day failed', error);
-            fetchDayLog();
-        }
-    };
+
 
     const handleAddHabit = async (habitData) => {
         try {
@@ -205,17 +189,7 @@ export default function Dashboard() {
                     </div>
 
                     <div className="flex items-center space-x-3">
-                        <div className="flex items-center mr-4">
-                            <span className={`text-sm font-medium mr-2 transition-colors ${dayLog.isBadDay ? 'text-orange-600' : 'text-slate-500'}`}>
-                                {dayLog.isBadDay ? '❤️ Healing Mode' : 'Bad Day?'}
-                            </span>
-                            <button
-                                onClick={toggleBadDay}
-                                className={`w-12 h-6 rounded-full p-1 transition-colors duration-200 ease-in-out ${dayLog.isBadDay ? 'bg-orange-200' : 'bg-slate-200'}`}
-                            >
-                                <div className={`w-4 h-4 rounded-full bg-white shadow-sm transform transition-transform duration-200 ${dayLog.isBadDay ? 'translate-x-6 bg-orange-500' : 'translate-x-0'}`} />
-                            </button>
-                        </div>
+
                         <Link to="/analytics">
                             <Button variant="outline" className="flex items-center gap-2">
                                 <BarChart2 size={20} />
@@ -260,16 +234,12 @@ export default function Dashboard() {
                         <div className="divide-y divide-slate-100">
                             {loading ? (
                                 <div className="p-12 text-center text-slate-400">Loading habits...</div>
-                            ) : habits.length === 0 ? (
-                                <div className="p-12 text-center">
-                                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-100 mb-4">
-                                        <Plus size={32} className="text-slate-400" />
-                                    </div>
-                                    <h3 className="text-lg font-medium text-slate-900">No habits yet</h3>
-                                    <p className="text-slate-500 mt-1">Create your first habit to start tracking!</p>
+                            ) : dailyHabits.length === 0 ? (
+                                <div className="p-8 text-center">
+                                    <h3 className="text-sm font-medium text-slate-900">No daily habits</h3>
                                 </div>
                             ) : (
-                                habits.map(habit => (
+                                dailyHabits.map(habit => (
                                     <HabitRow
                                         key={habit._id}
                                         habit={habit}
@@ -277,13 +247,116 @@ export default function Dashboard() {
                                         logs={logs}
                                         onToggle={handleToggle}
                                         onDelete={handleDeleteHabit}
-                                        isBadDay={dayLog.isBadDay}
+                                        isBadDay={false}
                                     />
                                 ))
                             )}
                         </div>
+
+                        {/* Completion Rate Footer */}
+                        {dailyHabits.length > 0 && (
+                            <div className="flex items-center border-t border-slate-200 bg-slate-50/50 sticky bottom-0 z-30">
+                                <div className="w-64 flex-none p-4 font-semibold text-slate-500 text-sm sticky left-0 bg-slate-50 z-20 border-r border-slate-200">
+                                    COMPLETION
+                                </div>
+                                <div className="flex-1 flex">
+                                    {days.map(day => {
+                                        const dateKey = formatDateKey(day);
+                                        const dayLogs = logs.filter(l => l.date === dateKey && dailyHabits.some(h => h._id === l.habitId));
+
+                                        const totalScore = dayLogs.reduce((acc, log) => acc + (log.score || 0), 0);
+                                        const maxScore = dailyHabits.length * 100;
+                                        const rate = maxScore > 0 ? Math.round((totalScore / maxScore) * 100) : 0;
+
+                                        let textColor = 'text-slate-400';
+                                        if (rate >= 80) textColor = 'text-green-600 font-bold';
+                                        else if (rate >= 50) textColor = 'text-blue-600 font-medium';
+                                        else if (rate > 0) textColor = 'text-slate-600';
+
+                                        return (
+                                            <div key={day.toString()} className="flex-1 min-w-[40px] py-3 flex items-center justify-center border-r border-slate-200/50 last:border-0">
+                                                <span className={`text-xs ${textColor}`}>
+                                                    {rate}%
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
+
+                {/* WEEKLY HABITS SECTION */}
+                {weeklyHabits.length > 0 && (
+                    <div className="mt-8">
+                        <h2 className="text-lg font-bold text-slate-800 mb-4 px-1">Weekly Habits</h2>
+                        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden overflow-x-auto">
+                            <div className="min-w-fit">
+                                {/* Header */}
+                                <div className="flex items-center border-b border-slate-200 bg-slate-50/50">
+                                    <div className="w-64 flex-none p-4 font-semibold text-slate-500 text-sm sticky left-0 bg-slate-50 z-20 border-r border-slate-200">
+                                        HABITS
+                                    </div>
+                                    <div className="flex-1 flex">
+                                        {weeks.map((week, index) => (
+                                            <div key={week.id} className="flex-1 min-w-[100px] py-3 flex flex-col items-center justify-center border-r border-slate-200/50 last:border-0">
+                                                <span className="text-xs font-medium text-slate-400 uppercase">Week {index + 1}</span>
+                                                <span className="text-xs text-slate-500 mt-1">
+                                                    {format(week.start, 'MMM d')} - {format(week.end, 'MMM d')}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Body */}
+                                <div className="divide-y divide-slate-100">
+                                    {weeklyHabits.map(habit => (
+                                        <div key={habit._id} className="flex items-center hover:bg-slate-50 transition-colors">
+                                            <div className="w-64 flex-none p-4 flex items-center justify-between sticky left-0 bg-white border-r border-slate-100 z-10">
+                                                <div className="flex items-center space-x-3">
+                                                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: habit.color }} />
+                                                    <span className="font-medium text-slate-700 truncate">{habit.name}</span>
+                                                </div>
+                                                <button onClick={() => handleDeleteHabit(habit._id)} className="p-1.5 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors">
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </div>
+                                            <div className="flex-1 flex">
+                                                {weeks.map(week => {
+                                                    // Check if any log exists in this week range
+                                                    // Simplified check: Use the 'start' date of the week as the key for weekly habits for now
+                                                    // Or better: Check if ANY log exists within the week range.
+                                                    // For Simplicity in this iteration: We will save the log using the week's Start Date as the key.
+                                                    const weekKey = formatDateKey(week.start);
+                                                    const log = logs.find(l => l.habitId === habit._id && l.date === weekKey);
+                                                    const isCompleted = log && log.score === 100;
+
+                                                    return (
+                                                        <div key={week.id} className="flex-1 min-w-[100px] h-14 flex items-center justify-center border-r border-slate-50 last:border-0">
+                                                            <button
+                                                                onClick={() => handleToggle(habit._id, weekKey)}
+                                                                className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${isCompleted ? 'text-white' : 'text-slate-200 hover:bg-slate-100'}`}
+                                                                style={{ backgroundColor: isCompleted ? habit.color : 'transparent' }}
+                                                            >
+                                                                {isCompleted ? (
+                                                                    <Check size={16} strokeWidth={3} />
+                                                                ) : (
+                                                                    <div className="w-3 h-3 rounded-full bg-slate-300" />
+                                                                )}
+                                                            </button>
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </main>
 
             <AddHabitModal

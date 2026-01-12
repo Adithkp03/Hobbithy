@@ -22,6 +22,7 @@ const createHabit = async (req, res) => {
         name: req.body.name,
         color: req.body.color,
         targetDays: req.body.targetDays,
+        frequency: req.body.frequency || 'daily',
     });
 
     res.status(200).json(habit);

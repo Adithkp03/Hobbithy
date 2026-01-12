@@ -5,15 +5,17 @@ import { Input } from './Input';
 export function AddHabitModal({ isOpen, onClose, onAdd }) {
     const [name, setName] = useState('');
     const [color, setColor] = useState('#3b82f6');
+    const [frequency, setFrequency] = useState('daily');
     const colors = ['#ef4444', '#f97316', '#f59e0b', '#84cc16', '#10b981', '#06b6d4', '#3b82f6', '#6366f1', '#8b5cf6', '#d946ef', '#f43f5e'];
 
     if (!isOpen) return null;
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onAdd({ name, color });
+        onAdd({ name, color, frequency });
         setName('');
         setColor('#3b82f6');
+        setFrequency('daily');
         onClose();
     };
 
@@ -30,6 +32,26 @@ export function AddHabitModal({ isOpen, onClose, onAdd }) {
                         required
                         autoFocus
                     />
+
+                    <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-2">Frequency</label>
+                        <div className="flex bg-slate-100 p-1 rounded-lg">
+                            <button
+                                type="button"
+                                className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-colors ${frequency === 'daily' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-900'}`}
+                                onClick={() => setFrequency('daily')}
+                            >
+                                Daily
+                            </button>
+                            <button
+                                type="button"
+                                className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-colors ${frequency === 'weekly' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-900'}`}
+                                onClick={() => setFrequency('weekly')}
+                            >
+                                Weekly
+                            </button>
+                        </div>
+                    </div>
 
                     <div>
                         <label className="block text-sm font-medium text-slate-700 mb-2">Color</label>
