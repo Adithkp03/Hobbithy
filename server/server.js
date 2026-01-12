@@ -27,12 +27,14 @@ const habitRoutes = require('./routes/habitRoutes');
 const logRoutes = require('./routes/logRoutes');
 const analyticsRoutes = require('./routes/analyticsRoutes');
 const reflectionRoutes = require('./routes/reflectionRoutes');
+const taskRoutes = require('./routes/taskRoutes');
 
 app.use('/auth', authRoutes);
 app.use('/habits', habitRoutes);
 app.use('/logs', logRoutes);
 app.use('/analytics', analyticsRoutes);
 app.use('/reflections', reflectionRoutes);
+app.use('/tasks', taskRoutes);
 
 
 app.get('/api/health', (req, res) => {

@@ -1,12 +1,13 @@
 import { useState, useEffect, useContext } from 'react';
 import { format, addMonths, subMonths, isSameWeek } from 'date-fns';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Plus, LogOut, BarChart2, Check, Trash2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, LogOut, BarChart2, Check, Trash2, CheckSquare } from 'lucide-react';
 import AuthContext from '../context/AuthContext';
 import API from '../api/axios';
 import { Button } from '../components/Button';
 import { HabitRow } from '../components/HabitRow';
 import { AddHabitModal } from '../components/AddHabitModal';
+import { TasksModal } from '../components/TasksModal';
 
 import { getDaysInMonth, formatDateKey, getWeeksInMonth } from '../utils/dateUtils';
 import logo from '../assets/logo.jpg';
@@ -19,6 +20,7 @@ export default function Dashboard() {
     const [habits, setHabits] = useState([]);
     const [logs, setLogs] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isTasksModalOpen, setIsTasksModalOpen] = useState(false);
     const [isReflectionOpen, setIsReflectionOpen] = useState(false);
     const [loading, setLoading] = useState(true);
 
@@ -196,6 +198,10 @@ export default function Dashboard() {
                                 <span className="hidden sm:inline">Analytics</span>
                             </Button>
                         </Link>
+                        <Button onClick={() => setIsTasksModalOpen(true)} variant="outline" className="flex items-center gap-2">
+                            <CheckSquare size={20} />
+                            <span className="hidden sm:inline">Tasks</span>
+                        </Button>
                         <Link to="/reflections">
                             <Button variant="outline" className="flex items-center gap-2">
                                 <span className="hidden sm:inline">History</span>
@@ -363,6 +369,11 @@ export default function Dashboard() {
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 onAdd={handleAddHabit}
+            />
+
+            <TasksModal
+                isOpen={isTasksModalOpen}
+                onClose={() => setIsTasksModalOpen(false)}
             />
 
             <ReflectionModal
