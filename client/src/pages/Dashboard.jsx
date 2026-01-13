@@ -8,6 +8,7 @@ import { Button } from '../components/Button';
 import { HabitRow } from '../components/HabitRow';
 import { AddHabitModal } from '../components/AddHabitModal';
 import { TasksModal } from '../components/TasksModal';
+import { LoadingScreen } from '../components/LoadingScreen';
 
 import { getDaysInMonth, formatDateKey, getWeeksInMonth } from '../utils/dateUtils';
 import logo from '../assets/logo.jpg';
@@ -239,7 +240,7 @@ export default function Dashboard() {
                         {/* Scrollable Rows (Body) */}
                         <div className="divide-y divide-slate-100">
                             {loading ? (
-                                <div className="p-12 text-center text-slate-400">Loading habits...</div>
+                                <LoadingScreen message="Loading habits..." />
                             ) : dailyHabits.length === 0 ? (
                                 <div className="p-8 text-center">
                                     <h3 className="text-sm font-medium text-slate-900">No daily habits</h3>

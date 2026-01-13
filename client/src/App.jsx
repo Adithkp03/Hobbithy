@@ -7,11 +7,16 @@ import Analytics from './pages/Analytics';
 import ReflectionsHistory from './pages/ReflectionsHistory';
 import { useContext } from 'react';
 import AuthContext from './context/AuthContext';
+import { LoadingScreen } from './components/LoadingScreen';
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center">
+      <LoadingScreen message="Loading Hobbithy..." />
+    </div>
+  );
 
   if (!user) {
     return <Navigate to="/login" replace />;
