@@ -26,6 +26,7 @@ import { LoadingScreen } from '../components/LoadingScreen';
 import { ReflectionModal } from '../components/ReflectionModal';
 import { getDaysInMonth, formatDateKey, getWeeksInMonth } from '../utils/dateUtils';
 import logo from '../assets/logo.jpg';
+import ThemeToggle from '../components/ThemeToggle';
 
 export default function Dashboard() {
     const { user, logout } = useContext(AuthContext);
@@ -201,17 +202,17 @@ export default function Dashboard() {
     const monthProgress = getMonthProgress();
 
     return (
-        <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-emerald-100">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 transition-colors duration-300 font-sans selection:bg-emerald-100 dark:selection:bg-emerald-900">
             {/* --- TOP NAVIGATION --- */}
-            <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+            <nav className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-8">
                         <div className="flex items-center gap-2">
-                            <img src={logo} alt="Hobbithy" className="w-8 h-8 rounded-lg object-cover shadow-lg shadow-emerald-200" />
-                            <span className="font-bold text-lg tracking-tight text-slate-900 hidden sm:block">Hobbithy</span>
+                            <img src={logo} alt="Hobbithy" className="w-8 h-8 rounded-lg object-cover shadow-lg shadow-emerald-100" />
+                            <span className="font-bold text-lg tracking-tight text-slate-900 dark:text-white hidden sm:block">Hobbithy</span>
                         </div>
 
-                        <div className="hidden md:flex items-center bg-slate-100 p-1 rounded-xl">
+                        <div className="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
                             {[
                                 { id: 'monthly', icon: Calendar, label: 'Monthly' },
                                 { id: 'weekly', icon: Clock, label: 'Weekly' },
@@ -220,8 +221,8 @@ export default function Dashboard() {
                                     key={tab.id}
                                     onClick={() => setView(tab.id)}
                                     className={`flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${view === tab.id
-                                        ? 'bg-white text-emerald-600 shadow-sm'
-                                        : 'text-slate-500 hover:text-slate-800'
+                                        ? 'bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm'
+                                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
                                         }`}
                                 >
                                     <tab.icon size={16} />
@@ -230,7 +231,7 @@ export default function Dashboard() {
                             ))}
                             <button
                                 onClick={() => setIsTasksModalOpen(true)}
-                                className="flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-medium text-slate-500 hover:text-slate-800 transition-all"
+                                className="flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all"
                             >
                                 <ListTodo size={16} />
                                 Tasks
@@ -240,9 +241,12 @@ export default function Dashboard() {
 
                     <div className="flex items-center gap-3">
                         <div className="hidden sm:block text-right mr-2">
-                            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Welcome</p>
-                            <p className="text-sm font-semibold text-slate-700">{user?.username}</p>
+                            <p className="text-xs text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">Welcome</p>
+                            <p className="text-sm font-playfair italic font-bold text-slate-900 dark:text-white">{user?.username}</p>
                         </div>
+                        <div className="h-8 w-[1px] bg-slate-200 dark:bg-slate-800 hidden sm:block"></div>
+                        <ThemeToggle />
+                        <div className="h-8 w-[1px] bg-slate-200 dark:bg-slate-800 hidden sm:block"></div>
                         <Link to="/analytics">
                             <Button variant="ghost" className="hidden sm:flex items-center gap-2 text-slate-500 hover:text-emerald-600">
                                 <BarChart2 size={18} />
@@ -286,9 +290,9 @@ export default function Dashboard() {
                         </button>
                         <button
                             onClick={() => setCurrentDate(new Date())}
-                            className="px-3 py-1.5 text-sm font-medium hover:bg-slate-50 rounded-lg transition-colors"
+                            className="px-3 py-1.5 text-sm font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors min-w-[80px]"
                         >
-                            Today
+                            {format(currentDate, 'MMMM')}
                         </button>
                         <button
                             onClick={() => setCurrentDate(addMonths(currentDate, 1))}
@@ -304,24 +308,24 @@ export default function Dashboard() {
                 ) : (
                     <>
                         {/* --- MAIN GRID SECTION --- */}
-                        <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden mb-8">
+                        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl shadow-sm overflow-hidden mb-8">
                             <div className="overflow-x-auto scrollbar-hide">
                                 <div className="min-w-[800px]">
                                     {/* Sticky Header Row */}
-                                    <div className="flex border-b border-slate-200 bg-slate-50/50 sticky top-0 z-40">
-                                        <div className="w-80 flex-none p-4 pl-6 font-semibold text-slate-400 text-xs uppercase tracking-wider sticky left-0 bg-slate-50 z-50 border-r border-slate-200 shadow-[4px_0_24px_-4px_rgba(0,0,0,0.1)] flex items-center">
+                                    <div className="flex border-b border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 sticky top-0 z-40">
+                                        <div className="w-48 md:w-80 flex-none p-4 pl-6 font-semibold text-slate-400 dark:text-slate-500 text-xs uppercase tracking-wider sticky left-0 bg-slate-50 dark:bg-slate-900 z-50 border-r border-slate-200 dark:border-slate-700 shadow-[4px_0_24px_-4px_rgba(0,0,0,0.1)] flex items-center">
                                             {view === 'monthly' ? 'Daily Habits' : 'Weekly Habits'}
                                         </div>
                                         <div className="flex-1 flex bg-slate-50/50 px-4">
                                             {view === 'monthly' ? (
                                                 days.map(day => (
-                                                    <div key={day.toString()} className="flex-1 min-w-[40px] py-4 flex flex-col items-center justify-center border-r border-slate-200/50 last:border-0 bg-slate-50/50">
-                                                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">
+                                                    <div key={day.toString()} className="flex-1 min-w-[40px] py-4 flex flex-col items-center justify-center border-r border-slate-200/50 dark:border-slate-700/50 last:border-0 bg-slate-50/50 dark:bg-slate-800/50">
+                                                        <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">
                                                             {format(day, 'EEEEE')}
                                                         </span>
                                                         <span className={`text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full ${format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd')
-                                                            ? 'text-white bg-emerald-500 shadow-md shadow-emerald-200'
-                                                            : 'text-slate-500'
+                                                            ? 'text-white bg-emerald-500 shadow-md shadow-emerald-200 dark:shadow-emerald-900/40'
+                                                            : 'text-slate-500 dark:text-slate-400'
                                                             }`}>
                                                             {format(day, 'd')}
                                                         </span>
@@ -329,9 +333,9 @@ export default function Dashboard() {
                                                 ))
                                             ) : (
                                                 weeks.map((week, index) => (
-                                                    <div key={week.id} className="flex-1 min-w-[100px] py-4 flex flex-col items-center justify-center border-r border-slate-200/50 last:border-0 bg-slate-50/50">
-                                                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Week {index + 1}</span>
-                                                        <span className="text-[10px] text-slate-500 font-medium bg-slate-100 px-2 py-0.5 rounded-full">
+                                                    <div key={week.id} className="flex-1 min-w-[100px] py-4 flex flex-col items-center justify-center border-r border-slate-200/50 dark:border-slate-700/50 last:border-0 bg-slate-50/50 dark:bg-slate-800/50">
+                                                        <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">Week {index + 1}</span>
+                                                        <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium bg-slate-100 dark:bg-slate-700/50 px-2 py-0.5 rounded-full">
                                                             {format(week.start, 'MMM d')} - {format(week.end, 'd')}
                                                         </span>
                                                     </div>
@@ -348,13 +352,13 @@ export default function Dashboard() {
                                         {view === 'monthly' ? (
                                             dailyHabits.map(habit => (
                                                 <div key={habit._id} className="flex group transition-colors">
-                                                    <div className="w-80 flex-none p-4 pl-6 flex items-center justify-between sticky left-0 bg-white border-r border-slate-100 z-30 group-hover:bg-slate-50 transition-colors">
+                                                    <div className="w-48 md:w-80 flex-none p-4 pl-6 flex items-center justify-between sticky left-0 bg-white dark:bg-slate-800 border-r border-slate-100 dark:border-slate-700 z-30 group-hover:bg-slate-50 dark:group-hover:bg-slate-700 transition-colors">
                                                         <div className="flex items-center gap-3 overflow-hidden">
                                                             <div
-                                                                className="w-2.5 h-2.5 rounded-full shrink-0"
-                                                                style={{ backgroundColor: habit.color }}
+                                                                className="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm"
+                                                                style={{ backgroundColor: habit.color, boxShadow: `0 0 12px ${habit.color}60` }}
                                                             />
-                                                            <span className="font-semibold text-slate-700 truncate text-sm">{habit.name}</span>
+                                                            <span className="font-semibold text-slate-700 dark:text-slate-200 truncate text-sm">{habit.name}</span>
                                                         </div>
                                                         <button
                                                             onClick={() => handleDeleteHabit(habit._id)}
@@ -381,7 +385,7 @@ export default function Dashboard() {
                                                                         w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-300 scale-90 hover:scale-100 z-0
                                                                         ${active || partial
                                                                                 ? `shadow-sm text-white`
-                                                                                : 'bg-slate-50 text-transparent hover:bg-slate-100'
+                                                                                : 'bg-slate-50 dark:bg-slate-700/30 text-transparent hover:bg-slate-100 dark:hover:bg-slate-700/50'
                                                                             }
                                                                     `}
                                                                         style={active || partial ? { backgroundColor: habit.color, boxShadow: `0 4px 6px -1px ${habit.color}40` } : {}}
@@ -398,10 +402,10 @@ export default function Dashboard() {
                                         ) : (
                                             weeklyHabits.map(habit => (
                                                 <div key={habit._id} className="flex group transition-colors">
-                                                    <div className="w-80 flex-none p-4 pl-6 flex items-center justify-between sticky left-0 bg-white border-r border-slate-100 z-30 group-hover:bg-slate-50 transition-colors">
+                                                    <div className="w-48 md:w-80 flex-none p-4 pl-6 flex items-center justify-between sticky left-0 bg-white dark:bg-slate-800 border-r border-slate-100 dark:border-slate-700 z-30 group-hover:bg-slate-50 dark:group-hover:bg-slate-700 transition-colors">
                                                         <div className="flex items-center space-x-3 overflow-hidden">
-                                                            <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: habit.color }} />
-                                                            <span className="font-semibold text-slate-700 truncate text-sm">{habit.name}</span>
+                                                            <div className="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm" style={{ backgroundColor: habit.color, boxShadow: `0 0 12px ${habit.color}60` }} />
+                                                            <span className="font-semibold text-slate-700 dark:text-slate-200 truncate text-sm">{habit.name}</span>
                                                         </div>
                                                         <button onClick={() => handleDeleteHabit(habit._id)} className="opacity-0 group-hover:opacity-100 p-1.5 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-md transition-all">
                                                             <Trash2 size={14} />
@@ -417,7 +421,7 @@ export default function Dashboard() {
                                                                 <div key={week.id} className="flex-1 min-w-[100px] py-4 flex items-center justify-center border-r border-slate-50 last:border-0">
                                                                     <button
                                                                         onClick={() => handleToggle(habit._id, weekKey)}
-                                                                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 shadow-sm ${isCompleted ? 'text-white scale-100' : 'text-slate-200 bg-slate-50 hover:bg-slate-100 scale-90 hover:scale-100'}`}
+                                                                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 shadow-sm ${isCompleted ? 'text-white scale-100' : 'text-slate-200 dark:text-slate-600 bg-slate-50 dark:bg-slate-700/30 hover:bg-slate-100 dark:hover:bg-slate-700/50 scale-90 hover:scale-100'}`}
                                                                         style={{ backgroundColor: isCompleted ? habit.color : undefined, boxShadow: isCompleted ? `0 4px 6px -1px ${habit.color}40` : 'none' }}
                                                                     >
                                                                         {isCompleted ? (
@@ -437,8 +441,8 @@ export default function Dashboard() {
 
                                     {/* Completion Row (Pills style) - Only for Monthly View */}
                                     {view === 'monthly' && dailyHabits.length > 0 && (
-                                        <div className="flex border-t border-slate-200 bg-slate-50/80 sticky bottom-0 z-40 backdrop-blur-sm">
-                                            <div className="w-80 flex-none p-4 pl-6 flex items-center gap-3 sticky left-0 bg-slate-50 z-50 border-r border-slate-200 shadow-[4px_0_24px_-4px_rgba(0,0,0,0.1)]">
+                                        <div className="flex border-t border-slate-200 dark:border-slate-700 bg-slate-50/80 dark:bg-slate-900/80 sticky bottom-0 z-40 backdrop-blur-sm">
+                                            <div className="w-48 md:w-80 flex-none p-4 pl-6 flex items-center gap-3 sticky left-0 bg-slate-50 dark:bg-slate-900 z-50 border-r border-slate-200 dark:border-slate-700 shadow-[4px_0_24px_-4px_rgba(0,0,0,0.1)]">
                                                 <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
                                                     <Award size={18} />
                                                 </div>
@@ -468,7 +472,7 @@ export default function Dashboard() {
 
                         {/* --- SUMMARY SECTION --- */}
                         < div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20" >
-                            <div className="bg-white p-6 border border-slate-200 rounded-3xl shadow-sm">
+                            <div className="bg-white dark:bg-slate-800 p-6 border border-slate-200 dark:border-slate-700 rounded-3xl shadow-sm">
                                 <h3 className="text-slate-500 font-semibold text-sm mb-4">Consistency Leader</h3>
                                 {bestHabit ? (
                                     <div className="flex items-center gap-4">
@@ -488,7 +492,7 @@ export default function Dashboard() {
                                 )}
                             </div>
 
-                            <div className="bg-white p-6 border border-slate-200 rounded-3xl shadow-sm">
+                            <div className="bg-white dark:bg-slate-800 p-6 border border-slate-200 dark:border-slate-700 rounded-3xl shadow-sm">
                                 <h3 className="text-slate-500 font-semibold text-sm mb-4">Month Progress</h3>
                                 <div className="flex items-end gap-2 mb-2">
                                     <span className="text-3xl font-bold">{monthProgress}%</span>

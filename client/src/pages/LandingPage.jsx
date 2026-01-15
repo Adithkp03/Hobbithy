@@ -12,27 +12,29 @@ import {
     Sparkles
 } from 'lucide-react';
 import logo from '../assets/logo.jpg';
+import ThemeToggle from '../components/ThemeToggle';
 
 // --- SEO & UI Optimized Components ---
 
 const Navbar = () => {
     const navigate = useNavigate();
     return (
-        <nav className="fixed top-0 w-full z-[60] bg-stone-50/70 backdrop-blur-xl border-b border-stone-200/40 px-6 py-4">
+        <nav className="fixed top-0 w-full z-[60] bg-stone-50/70 dark:bg-slate-900/70 backdrop-blur-xl border-b border-stone-200/40 dark:border-slate-800 transition-colors duration-300 px-6 py-4">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
                 <div className="flex items-center gap-2 group cursor-pointer" aria-label="Hobbithy Home">
                     <img src={logo} alt="Hobbithy" className="w-10 h-10 rounded-lg object-cover shadow-lg shadow-emerald-100 group-hover:rotate-12 transition-transform duration-300" />
-                    <span className="text-2xl font-black tracking-tighter text-stone-800">hobbithy</span>
+                    <span className="text-2xl font-black tracking-tighter text-stone-800 dark:text-white">hobbithy</span>
                 </div>
 
-                <div className="hidden lg:flex items-center gap-10 text-sm font-semibold text-stone-500">
-                    <a href="#philosophy" className="hover:text-emerald-600 transition-colors">Habit Recovery</a>
-                    <a href="#simulator" className="hover:text-emerald-600 transition-colors">Resilience Simulator</a>
-                    <a href="#comparison" className="hover:text-emerald-600 transition-colors">The Difference</a>
+                <div className="hidden lg:flex items-center gap-10 text-sm font-semibold text-stone-500 dark:text-slate-400">
+                    <a href="#philosophy" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Habit Recovery</a>
+                    <a href="#simulator" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Resilience Simulator</a>
+                    <a href="#comparison" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">The Difference</a>
                 </div>
 
                 <div className="flex items-center gap-5">
-                    <button onClick={() => navigate('/login')} className="text-sm font-bold text-stone-600 hover:text-stone-900 transition-colors">Sign In</button>
+                    <ThemeToggle />
+                    <button onClick={() => navigate('/login')} className="text-sm font-bold text-stone-600 dark:text-slate-300 hover:text-stone-900 dark:hover:text-white transition-colors">Sign In</button>
                     <button onClick={() => navigate('/register')} className="bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-emerald-700 transition-all shadow-xl shadow-stone-200 active:scale-95">
                         Get Started
                     </button>
@@ -45,7 +47,7 @@ const Navbar = () => {
 const Hero = () => {
     const navigate = useNavigate();
     return (
-        <header className="relative pt-32 pb-24 md:pt-52 md:pb-40 overflow-hidden bg-stone-50">
+        <header className="relative pt-32 pb-24 md:pt-52 md:pb-40 overflow-hidden bg-stone-50 dark:bg-slate-900 transition-colors duration-300">
             {/* Refined Mesh Gradient Background */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none opacity-60">
                 <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-emerald-100 rounded-full blur-[120px]" />
@@ -59,7 +61,7 @@ const Hero = () => {
                     The World's First Resilient Habit Tracker
                 </div>
 
-                <h1 className="text-6xl md:text-8xl font-serif text-stone-900 leading-[0.95] mb-10 max-w-5xl mx-auto tracking-tight">
+                <h1 className="text-6xl md:text-8xl font-serif text-stone-900 dark:text-slate-50 leading-[0.95] mb-10 max-w-5xl mx-auto tracking-tight">
                     Build habits that <br />
                     <span className="text-emerald-700 italic font-medium relative">
                         actually survive

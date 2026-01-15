@@ -4,8 +4,12 @@ export default {
         "./index.html",
         "./src/**/*.{js,ts,jsx,tsx}",
     ],
+    darkMode: 'class',
     theme: {
         extend: {
+            fontFamily: {
+                playfair: ['"Playfair Display"', 'serif'],
+            },
             colors: {
                 primary: {
                     50: '#f2fcf5',
