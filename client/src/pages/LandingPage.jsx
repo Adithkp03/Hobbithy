@@ -11,6 +11,7 @@ import {
     ArrowUpRight,
     Sparkles
 } from 'lucide-react';
+import logo from '../assets/logo.jpg';
 
 // --- SEO & UI Optimized Components ---
 
@@ -20,9 +21,7 @@ const Navbar = () => {
         <nav className="fixed top-0 w-full z-[60] bg-stone-50/70 backdrop-blur-xl border-b border-stone-200/40 px-6 py-4">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
                 <div className="flex items-center gap-2 group cursor-pointer" aria-label="Hobbithy Home">
-                    <div className="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200 group-hover:rotate-12 transition-transform duration-300">
-                        <RefreshCcw className="text-white w-5 h-5" />
-                    </div>
+                    <img src={logo} alt="Hobbithy" className="w-10 h-10 rounded-lg object-cover shadow-lg shadow-emerald-100 group-hover:rotate-12 transition-transform duration-300" />
                     <span className="text-2xl font-black tracking-tighter text-stone-800">hobbithy</span>
                 </div>
 
@@ -198,9 +197,7 @@ const Footer = () => (
         <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 mb-20">
             <div className="col-span-2 space-y-6">
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
-                        <RefreshCcw className="text-white w-4 h-4" />
-                    </div>
+                    <img src={logo} alt="Hobbithy" className="w-8 h-8 rounded-lg object-cover" />
                     <span className="text-2xl font-bold text-white tracking-tighter">hobbithy</span>
                 </div>
                 <p className="max-w-xs text-stone-500 leading-relaxed">
