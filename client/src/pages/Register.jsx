@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 import AuthContext from '../context/AuthContext';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
@@ -24,7 +25,11 @@ export default function Register() {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-900 transition-colors duration-300 px-4 py-12 sm:px-6 lg:px-8">
+        <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-900 transition-colors duration-300 px-4 py-12 sm:px-6 lg:px-8 relative">
+            <Link to="/" className="absolute top-8 left-8 flex items-center gap-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors font-medium">
+                <ArrowLeft size={20} />
+                Back to Home
+            </Link>
             <div className="w-full max-w-md space-y-8 rounded-2xl bg-white dark:bg-slate-800 p-8 shadow-xl dark:shadow-slate-900/50 transition-colors duration-300">
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-slate-900 dark:text-white">

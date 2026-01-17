@@ -112,7 +112,7 @@ const ResilienceSimulator = () => {
                                 <button
                                     key={type}
                                     onClick={() => setDayType(type)}
-                                    className={`px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 transform active:scale-95 ${dayType === type ? 'bg-stone-900 text-white shadow-xl dark:shadow-slate-700/50 translate-y-[-2px]' : 'bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 hover:bg-stone-200 dark:hover:bg-slate-700'
+                                    className={`px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 transform active:scale-95 ${dayType === type ? 'bg-stone-900 text-white  dark:shadow-slate-700/50 translate-y-[-2px]' : 'bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 hover:bg-stone-200 dark:hover:bg-slate-700'
                                         }`}
                                     aria-pressed={dayType === type}
                                 >
