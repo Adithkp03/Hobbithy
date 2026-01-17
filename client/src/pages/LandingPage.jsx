@@ -23,7 +23,7 @@ const Navbar = () => {
             <div className="max-w-7xl mx-auto flex justify-between items-center">
                 <div className="flex items-center gap-2 group cursor-pointer" aria-label="Hobbithy Home">
                     <img src={logo} alt="Hobbithy" className="w-10 h-10 rounded-lg object-cover shadow-sm dark:shadow-emerald-900/20 group-hover:rotate-12 transition-transform duration-300" />
-                    <span className="text-2xl font-black tracking-tighter text-stone-800 dark:text-white">hobbithy</span>
+                    <span className="text-2xl font-black tracking-tighter text-stone-800 dark:text-white">Hobbithy</span>
                 </div>
 
                 <div className="hidden lg:flex items-center gap-10 text-sm font-semibold text-stone-500 dark:text-slate-400">
@@ -49,10 +49,10 @@ const Hero = () => {
     return (
         <header className="relative pt-32 pb-24 md:pt-52 md:pb-40 overflow-hidden bg-stone-50 dark:bg-slate-900 transition-colors duration-300">
             {/* Refined Mesh Gradient Background */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none opacity-60">
-                <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-emerald-100 rounded-full blur-[120px]" />
-                <div className="absolute bottom-[0%] right-[-10%] w-[50%] h-[50%] bg-amber-100 rounded-full blur-[100px]" />
-                <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-blue-50 rounded-full blur-[80px]" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none opacity-60 dark:opacity-50">
+                <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-emerald-100 dark:bg-emerald-600/20 rounded-full blur-[120px]" />
+                <div className="absolute bottom-[0%] right-[-10%] w-[50%] h-[50%] bg-amber-100 dark:bg-indigo-600/20 rounded-full blur-[100px]" />
+                <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-blue-50 dark:bg-purple-600/20 rounded-full blur-[80px]" />
             </div>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
@@ -182,12 +182,12 @@ const FeatureCard = ({ icon: Icon, title, description, badge }) => (
 );
 
 const TrustSection = () => (
-    <section className="py-20 bg-stone-50 border-y border-stone-200/50 overflow-hidden">
+    <section className="py-20 bg-stone-50 dark:bg-slate-900 border-y border-stone-200/50 dark:border-slate-800 transition-colors duration-300 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 text-center">
-            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-stone-400 mb-10">Optimized for humans who value progress over perfection</h2>
+            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-stone-400 dark:text-slate-500 mb-10 transition-colors">Optimized for humans who value progress over perfection</h2>
             <div className="flex flex-wrap justify-center gap-12 md:gap-24 opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
                 {['ProductHunt', 'Wired', 'TheVerge', 'Mindful', 'PsychologyToday'].map(brand => (
-                    <span key={brand} className="text-2xl font-serif font-bold text-stone-900 cursor-default">{brand}</span>
+                    <span key={brand} className="text-2xl font-serif font-bold text-stone-900 dark:text-slate-400 cursor-default transition-colors">{brand}</span>
                 ))}
             </div>
         </div>
@@ -237,7 +237,7 @@ export default function LandingPage() {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-stone-50 text-stone-900 selection:bg-emerald-100 selection:text-emerald-900 scroll-smooth">
+        <div className="min-h-screen bg-stone-50 dark:bg-slate-950 text-stone-900 dark:text-white selection:bg-emerald-100 selection:text-emerald-900 scroll-smooth transition-colors duration-300">
             <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,300;1,9..144,400&display=swap');
         
