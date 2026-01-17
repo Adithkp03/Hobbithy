@@ -35,7 +35,6 @@ const Navbar = () => {
 
                 <div className="flex items-center gap-5">
                     <ThemeToggle />
-                    <ThemeToggle />
                     <button onClick={() => navigate('/login')} className="text-sm font-bold text-stone-600 dark:text-slate-300 hover:text-stone-900 dark:hover:text-white transition-colors" aria-label="Sign In">Sign In</button>
                     <button onClick={() => navigate('/register')} className="bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-stone-500/20 dark:shadow-none active:scale-95" aria-label="Get Started with Hobbithy">
                         Get Started
