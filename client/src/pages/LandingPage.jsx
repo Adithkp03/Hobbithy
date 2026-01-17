@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import SEO from '../components/SEO';
 import {
     ArrowRight,
     RefreshCcw,
@@ -34,8 +35,9 @@ const Navbar = () => {
 
                 <div className="flex items-center gap-5">
                     <ThemeToggle />
-                    <button onClick={() => navigate('/login')} className="text-sm font-bold text-stone-600 dark:text-slate-300 hover:text-stone-900 dark:hover:text-white transition-colors">Sign In</button>
-                    <button onClick={() => navigate('/register')} className="bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-stone-500/20 dark:shadow-none active:scale-95">
+                    <ThemeToggle />
+                    <button onClick={() => navigate('/login')} className="text-sm font-bold text-stone-600 dark:text-slate-300 hover:text-stone-900 dark:hover:text-white transition-colors" aria-label="Sign In">Sign In</button>
+                    <button onClick={() => navigate('/register')} className="bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-stone-500/20 dark:shadow-none active:scale-95" aria-label="Get Started with Hobbithy">
                         Get Started
                     </button>
                 </div>
@@ -77,9 +79,9 @@ const Hero = () => {
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
-                    <button onClick={() => navigate('/register')} className="w-full sm:w-auto bg-emerald-600 text-white px-10 py-5 rounded-full text-xl font-bold hover:bg-emerald-700 hover:shadow-2xl hover:shadow-emerald-200 dark:hover:shadow-emerald-900/30 transition-all flex items-center justify-center gap-3 group">
+                    <button onClick={() => navigate('/register')} className="w-full sm:w-auto bg-emerald-600 text-white px-10 py-5 rounded-full text-xl font-bold hover:bg-emerald-700 hover:shadow-2xl hover:shadow-emerald-200 dark:hover:shadow-emerald-900/30 transition-all flex items-center justify-center gap-3 group" aria-label="Join the Resilient 1%">
                         Join the Resilient 1%
-                        <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                     </button>
                 </div>
             </div>
@@ -252,6 +254,33 @@ export default function LandingPage() {
 
             {/* Subtle Grain Overlay for Premium Texture */}
             <div className="fixed inset-0 pointer-events-none bg-grain z-[100]" />
+
+            {/* SEO Configuration */}
+            <SEO
+                title="Hobbithy Tracker - Build Better Habits Daily"
+                description="Hobbithy is the world's first resilient habit tracker using Adaptive Goal Technology. Build consistent habits with partial wins and recovery metrics, not just streaks."
+                keywords="habit tracker, resilience, personal growth, productivity, adaptive goals, habit recovery"
+                video
+                schema={{
+                    "@context": "https://schema.org",
+                    "@type": "SoftwareApplication",
+                    "name": "Hobbithy Tracker",
+                    "applicationCategory": "LifestyleApplication",
+                    "operatingSystem": "Web",
+                    "description": "A resilient habit tracker that helps you build habits that survive bad days using Adaptive Goal Technology.",
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "0",
+                        "priceCurrency": "USD"
+                    },
+                    "featureList": [
+                        "Adaptive Goal Technology",
+                        "Resilience Simulator",
+                        "Recovery Metrics",
+                        "Partial Wins Logic"
+                    ]
+                }}
+            />
 
             <Navbar />
 

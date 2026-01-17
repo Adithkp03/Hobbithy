@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider } from './context/AuthContext';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -31,39 +32,41 @@ import { ThemeProvider } from './context/ThemeContext';
 function App() {
   return (
     <ThemeProvider>
-      <Router>
-        <AuthProvider>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/analytics"
-              element={
-                <ProtectedRoute>
-                  <Analytics />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/reflections"
-              element={
-                <ProtectedRoute>
-                  <ReflectionsHistory />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/" element={<LandingPage />} />
-          </Routes>
-        </AuthProvider>
-      </Router>
+      <HelmetProvider>
+        <Router>
+          <AuthProvider>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/analytics"
+                element={
+                  <ProtectedRoute>
+                    <Analytics />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/reflections"
+                element={
+                  <ProtectedRoute>
+                    <ReflectionsHistory />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/" element={<LandingPage />} />
+            </Routes>
+          </AuthProvider>
+        </Router>
+      </HelmetProvider>
     </ThemeProvider>
   );
 }
