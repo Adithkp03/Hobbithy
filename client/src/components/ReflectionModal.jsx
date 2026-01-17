@@ -47,7 +47,7 @@ export function ReflectionModal({ isOpen, onClose, onSubmit }) {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    className="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden"
+                    className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl w-full max-w-lg overflow-hidden"
                 >
                     {/* Header */}
                     <div className="bg-gradient-to-r from-emerald-500 to-teal-500 p-6 text-white flex justify-between items-start">
@@ -71,7 +71,7 @@ export function ReflectionModal({ isOpen, onClose, onSubmit }) {
                             <span className="text-xs font-bold text-emerald-500 tracking-wider uppercase">
                                 Question {step + 1} of {questions.length}
                             </span>
-                            <h3 className="text-xl font-semibold text-slate-800 mt-2">
+                            <h3 className="text-xl font-semibold text-slate-800 dark:text-white mt-2">
                                 {currentQ.title}
                             </h3>
                         </div>
@@ -80,7 +80,7 @@ export function ReflectionModal({ isOpen, onClose, onSubmit }) {
                             value={answers[currentQ.key]}
                             onChange={(e) => setAnswers({ ...answers, [currentQ.key]: e.target.value })}
                             placeholder={currentQ.placeholder}
-                            className="w-full h-32 p-4 text-slate-700 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none resize-none transition-all"
+                            className="w-full h-32 p-4 text-slate-700 dark:text-slate-200 bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none resize-none transition-all placeholder-slate-400 dark:placeholder-slate-500"
                             autoFocus
                         />
 
@@ -88,7 +88,7 @@ export function ReflectionModal({ isOpen, onClose, onSubmit }) {
                         <div className="mt-8 flex justify-between items-center">
                             <button
                                 onClick={onClose}
-                                className="text-slate-400 hover:text-slate-600 text-sm font-medium px-2 py-1"
+                                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 text-sm font-medium px-2 py-1"
                             >
                                 Skip for now
                             </button>
@@ -110,7 +110,7 @@ export function ReflectionModal({ isOpen, onClose, onSubmit }) {
                     </div>
 
                     {/* Progress Bar */}
-                    <div className="h-1 bg-slate-100 w-full">
+                    <div className="h-1 bg-slate-100 dark:bg-slate-700 w-full">
                         <div
                             className="h-full bg-emerald-500 transition-all duration-300 ease-out"
                             style={{ width: `${((step + 1) / questions.length) * 100}%` }}

@@ -22,7 +22,7 @@ const Navbar = () => {
         <nav className="fixed top-0 w-full z-[60] bg-stone-50/70 dark:bg-slate-900/70 backdrop-blur-xl border-b border-stone-200/40 dark:border-slate-800 transition-colors duration-300 px-6 py-4">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
                 <div className="flex items-center gap-2 group cursor-pointer" aria-label="Hobbithy Home">
-                    <img src={logo} alt="Hobbithy" className="w-10 h-10 rounded-lg object-cover shadow-lg shadow-emerald-100 group-hover:rotate-12 transition-transform duration-300" />
+                    <img src={logo} alt="Hobbithy" className="w-10 h-10 rounded-lg object-cover shadow-sm dark:shadow-emerald-900/20 group-hover:rotate-12 transition-transform duration-300" />
                     <span className="text-2xl font-black tracking-tighter text-stone-800 dark:text-white">hobbithy</span>
                 </div>
 
@@ -35,7 +35,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-5">
                     <ThemeToggle />
                     <button onClick={() => navigate('/login')} className="text-sm font-bold text-stone-600 dark:text-slate-300 hover:text-stone-900 dark:hover:text-white transition-colors">Sign In</button>
-                    <button onClick={() => navigate('/register')} className="bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-emerald-700 transition-all shadow-xl shadow-stone-200 active:scale-95">
+                    <button onClick={() => navigate('/register')} className="bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-stone-500/20 dark:shadow-none active:scale-95">
                         Get Started
                     </button>
                 </div>
@@ -72,12 +72,12 @@ const Hero = () => {
                     &nbsp; your bad days.
                 </h1>
 
-                <p className="text-xl md:text-2xl text-stone-600 max-w-3xl mx-auto mb-12 leading-relaxed font-serif italic font-light">
-                    Ditch the "Day 0" anxiety. Hobbithy uses <strong className="font-bold text-stone-800 not-italic">Adaptive Goal Technology</strong> to help you maintain consistency through life’s inevitable ups and downs.
+                <p className="text-xl md:text-2xl text-stone-600 dark:text-stone-300 max-w-3xl mx-auto mb-12 leading-relaxed font-serif italic font-light">
+                    Ditch the "Day 0" anxiety. Hobbithy uses <strong className="font-bold text-stone-800 dark:text-stone-100 not-italic">Adaptive Goal Technology</strong> to help you maintain consistency through life’s inevitable ups and downs.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
-                    <button onClick={() => navigate('/register')} className="w-full sm:w-auto bg-emerald-600 text-white px-10 py-5 rounded-full text-xl font-bold hover:bg-emerald-700 hover:shadow-2xl hover:shadow-emerald-200 transition-all flex items-center justify-center gap-3 group">
+                    <button onClick={() => navigate('/register')} className="w-full sm:w-auto bg-emerald-600 text-white px-10 py-5 rounded-full text-xl font-bold hover:bg-emerald-700 hover:shadow-2xl hover:shadow-emerald-200 dark:hover:shadow-emerald-900/30 transition-all flex items-center justify-center gap-3 group">
                         Join the Resilient 1%
                         <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                     </button>
@@ -97,7 +97,7 @@ const ResilienceSimulator = () => {
     };
 
     return (
-        <section id="simulator" className="py-24 bg-white px-6 scroll-mt-20">
+        <section id="simulator" className="py-24 bg-white dark:bg-slate-900 px-6 scroll-mt-20">
             <div className="max-w-7xl mx-auto">
                 <div className="grid lg:grid-cols-2 gap-20 items-center">
                     <div className="space-y-8">
@@ -112,7 +112,7 @@ const ResilienceSimulator = () => {
                                 <button
                                     key={type}
                                     onClick={() => setDayType(type)}
-                                    className={`px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 transform active:scale-95 ${dayType === type ? 'bg-stone-900 text-white shadow-xl translate-y-[-2px]' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'
+                                    className={`px-6 py-3 rounded-2xl font-bold text-sm transition-all duration-300 transform active:scale-95 ${dayType === type ? 'bg-stone-900 text-white shadow-xl dark:shadow-slate-700/50 translate-y-[-2px]' : 'bg-stone-100 dark:bg-slate-800 text-stone-500 dark:text-slate-400 hover:bg-stone-200 dark:hover:bg-slate-700'
                                         }`}
                                     aria-pressed={dayType === type}
                                 >
@@ -122,12 +122,12 @@ const ResilienceSimulator = () => {
                         </div>
                     </div>
 
-                    <div className="relative p-1 bg-stone-50 rounded-[3rem] border border-stone-200 shadow-2xl transition-all duration-500">
-                        <div className="bg-white rounded-[2.8rem] p-10 space-y-8">
+                    <div className="relative p-1 bg-stone-50 dark:bg-slate-800 rounded-[3rem] border border-stone-200 dark:border-slate-700 shadow-2xl dark:shadow-slate-900/50 transition-all duration-500">
+                        <div className="bg-white dark:bg-slate-900 rounded-[2.8rem] p-10 space-y-8">
                             <div className="flex justify-between items-end">
                                 <div>
-                                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 mb-2">Adaptive Goal Engine</p>
-                                    <p className="text-3xl font-bold text-stone-900 transition-all duration-300">{scenarios[dayType].target}</p>
+                                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 dark:text-slate-500 mb-2">Adaptive Goal Engine</p>
+                                    <p className="text-3xl font-bold text-stone-900 dark:text-white transition-all duration-300">{scenarios[dayType].target}</p>
                                 </div>
                                 <div className={`px-4 py-1.5 rounded-full text-xs font-black transition-colors duration-500 ${scenarios[dayType].color} text-white`}>
                                     {scenarios[dayType].score}
@@ -135,23 +135,23 @@ const ResilienceSimulator = () => {
                             </div>
 
                             <div className="space-y-4">
-                                <div className="h-4 bg-stone-100 rounded-full overflow-hidden">
+                                <div className="h-4 bg-stone-100 dark:bg-slate-800 rounded-full overflow-hidden">
                                     <div
                                         className={`h-full transition-all duration-700 ease-out ${scenarios[dayType].color}`}
                                         style={{ width: dayType === 'normal' ? '100%' : dayType === 'busy' ? '40%' : '15%' }}
                                     />
                                 </div>
-                                <div className="flex justify-between text-[10px] font-bold text-stone-400 uppercase tracking-widest">
+                                <div className="flex justify-between text-[10px] font-bold text-stone-400 dark:text-slate-500 uppercase tracking-widest">
                                     <span>Progress Velocity</span>
                                     <span>{scenarios[dayType].note}</span>
                                 </div>
                             </div>
 
-                            <div className="bg-emerald-50 p-5 rounded-2xl flex gap-4 items-center border border-emerald-100">
-                                <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
+                            <div className="bg-emerald-50 dark:bg-emerald-900/10 p-5 rounded-2xl flex gap-4 items-center border border-emerald-100 dark:border-emerald-900/30">
+                                <div className="w-10 h-10 bg-white dark:bg-slate-800 rounded-xl flex items-center justify-center shadow-sm">
                                     <Trophy className="w-5 h-5 text-emerald-600" />
                                 </div>
-                                <p className="text-sm text-emerald-800 font-medium">
+                                <p className="text-sm text-emerald-800 dark:text-emerald-200 font-medium">
                                     {dayType === 'sick'
                                         ? "Great job prioritizing health. Your resilience score increased!"
                                         : "Consistency maintained. You're building lasting momentum through flexibility."}
@@ -166,15 +166,15 @@ const ResilienceSimulator = () => {
 };
 
 const FeatureCard = ({ icon: Icon, title, description, badge }) => (
-    <article className="bg-white p-10 rounded-[2.5rem] border border-stone-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.08)] transition-all duration-500 group hover:-translate-y-2">
+    <article className="bg-white dark:bg-slate-800 p-10 rounded-[2.5rem] border border-stone-100 dark:border-slate-700 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.08)] dark:shadow-none dark:hover:shadow-[0_20px_50px_rgb(16,185,129,0.05)] transition-all duration-500 group hover:-translate-y-2">
         <div className="flex justify-between items-start mb-8">
-            <div className="w-14 h-14 bg-stone-50 rounded-2xl flex items-center justify-center text-stone-800 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-500 shadow-inner">
+            <div className="w-14 h-14 bg-stone-50 dark:bg-slate-700 rounded-2xl flex items-center justify-center text-stone-800 dark:text-slate-100 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-500 shadow-inner">
                 <Icon className="w-7 h-7" aria-hidden="true" />
             </div>
-            {badge && <span className="text-[10px] font-black bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full uppercase tracking-tighter">{badge}</span>}
+            {badge && <span className="text-[10px] font-black bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 px-3 py-1 rounded-full uppercase tracking-tighter">{badge}</span>}
         </div>
-        <h3 className="text-2xl font-bold text-stone-900 mb-4">{title}</h3>
-        <p className="text-stone-500 leading-relaxed font-medium">{description}</p>
+        <h3 className="text-2xl font-bold text-stone-900 dark:text-white mb-4">{title}</h3>
+        <p className="text-stone-500 dark:text-slate-400 leading-relaxed font-medium">{description}</p>
         <div className="mt-8 flex items-center gap-2 text-emerald-600 font-bold text-sm cursor-pointer group/link">
             Learn about the science <ArrowUpRight className="w-4 h-4 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
         </div>
@@ -260,11 +260,11 @@ export default function LandingPage() {
 
                 <TrustSection />
 
-                <section id="philosophy" className="py-32 bg-white px-6 scroll-mt-20">
+                <section id="philosophy" className="py-32 bg-white dark:bg-slate-900 px-6 scroll-mt-20">
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-24">
-                            <h2 className="text-4xl md:text-6xl font-serif text-stone-900 mb-6 tracking-tight">Built for <span className="text-emerald-600 italic">Growth</span>, not Guilt.</h2>
-                            <p className="text-stone-500 text-xl max-w-2xl mx-auto font-medium">Hobbithy is the first habit-forming platform that treats you like a human, valuing your <strong>resilience</strong> as much as your consistency.</p>
+                            <h2 className="text-4xl md:text-6xl font-serif text-stone-900 dark:text-white mb-6 tracking-tight">Built for <span className="text-emerald-600 dark:text-emerald-400 italic">Growth</span>, not Guilt.</h2>
+                            <p className="text-stone-500 dark:text-slate-400 text-xl max-w-2xl mx-auto font-medium">Hobbithy is the first habit-forming platform that treats you like a human, valuing your <strong>resilience</strong> as much as your consistency.</p>
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-10">

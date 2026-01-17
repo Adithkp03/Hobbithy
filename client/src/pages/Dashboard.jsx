@@ -204,11 +204,11 @@ export default function Dashboard() {
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 transition-colors duration-300 font-sans selection:bg-emerald-100 dark:selection:bg-emerald-900">
             {/* --- TOP NAVIGATION --- */}
-            <nav className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+            <nav className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-slate-900/50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-8">
                         <div className="flex items-center gap-2">
-                            <img src={logo} alt="Hobbithy" className="w-8 h-8 rounded-lg object-cover shadow-lg shadow-emerald-100" />
+                            <img src={logo} alt="Hobbithy" className="w-8 h-8 rounded-lg object-cover shadow-sm" />
                             <span className="font-bold text-lg tracking-tight text-slate-900 dark:text-white hidden sm:block">Hobbithy</span>
                         </div>
 
@@ -259,7 +259,7 @@ export default function Dashboard() {
 
                         <button
                             onClick={() => setIsModalOpen(true)}
-                            className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md shadow-emerald-100 transition-all active:scale-95 ml-2"
+                            className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-lg shadow-emerald-500/20 transition-all active:scale-95 ml-2"
                         >
                             <Plus size={18} />
                             <span className="hidden sm:inline">New Habit</span>
@@ -273,15 +273,15 @@ export default function Dashboard() {
                 {/* --- HEADER SECTION --- */}
                 <header className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
                     <div>
-                        <h1 className="text-3xl font-bold text-slate-900">
+                        <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
                             {format(currentDate, 'MMMM yyyy')}
                         </h1>
-                        <p className="text-slate-500 mt-1">
+                        <p className="text-slate-500 dark:text-slate-400 mt-1">
                             You've completed {logs.filter(l => l.score === 100).length} sessions this month. Keep it up!
                         </p>
                     </div>
 
-                    <div className="flex items-center gap-2 bg-white border border-slate-200 p-1 rounded-xl shadow-sm">
+                    <div className="flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1 rounded-xl shadow-sm dark:shadow-none">
                         <button
                             onClick={() => setCurrentDate(subMonths(currentDate, 1))}
                             className="p-2 hover:bg-slate-50 rounded-lg text-slate-400 hover:text-slate-900 transition-colors"
@@ -308,24 +308,24 @@ export default function Dashboard() {
                 ) : (
                     <>
                         {/* --- MAIN GRID SECTION --- */}
-                        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl shadow-sm overflow-hidden mb-8">
+                        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl shadow-sm dark:shadow-slate-900/50 overflow-hidden mb-8">
                             <div className="overflow-x-auto scrollbar-hide">
                                 <div className="min-w-[800px]">
                                     {/* Sticky Header Row */}
-                                    <div className="flex border-b border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 sticky top-0 z-40">
-                                        <div className="w-48 md:w-80 flex-none p-4 pl-6 font-semibold text-slate-400 dark:text-slate-500 text-xs uppercase tracking-wider sticky left-0 bg-slate-50 dark:bg-slate-900 z-50 border-r border-slate-200 dark:border-slate-700 shadow-[4px_0_24px_-4px_rgba(0,0,0,0.1)] flex items-center">
+                                    <div className="flex border-b border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 sticky top-0 z-40">
+                                        <div className="w-48 md:w-80 flex-none p-4 pl-6 font-semibold text-slate-400 dark:text-white text-xs uppercase tracking-wider sticky left-0 bg-slate-50 dark:bg-slate-800 z-50 border-r border-slate-200 dark:border-slate-700 shadow-none dark:shadow-[4px_0_24px_-4px_#020617] flex items-center">
                                             {view === 'monthly' ? 'Daily Habits' : 'Weekly Habits'}
                                         </div>
-                                        <div className="flex-1 flex bg-slate-50/50 px-4">
+                                        <div className="flex-1 flex bg-slate-800/0 px-4">
                                             {view === 'monthly' ? (
                                                 days.map(day => (
-                                                    <div key={day.toString()} className="flex-1 min-w-[40px] py-4 flex flex-col items-center justify-center border-r border-slate-200/50 dark:border-slate-700/50 last:border-0 bg-slate-50/50 dark:bg-slate-800/50">
-                                                        <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">
+                                                    <div key={day.toString()} className="flex-1 min-w-[40px] py-4 flex flex-col items-center justify-center border-r border-slate-200/50 dark:border-slate-700/50 last:border-0 bg-slate-50/50 dark:bg-slate-800">
+                                                        <span className="text-[10px] font-bold text-slate-400 dark:text-slate-200 uppercase tracking-widest mb-1">
                                                             {format(day, 'EEEEE')}
                                                         </span>
                                                         <span className={`text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full ${format(day, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd')
                                                             ? 'text-white bg-emerald-500 shadow-md shadow-emerald-200 dark:shadow-emerald-900/40'
-                                                            : 'text-slate-500 dark:text-slate-400'
+                                                            : 'text-slate-500 dark:text-white'
                                                             }`}>
                                                             {format(day, 'd')}
                                                         </span>
@@ -343,7 +343,7 @@ export default function Dashboard() {
                                             )}
                                         </div>
                                     </div>    {/* Habit Rows */}
-                                    <div className="divide-y divide-slate-50">
+                                    <div className="divide-y divide-slate-50 dark:divide-slate-700/50">
                                         {(view === 'monthly' ? dailyHabits : weeklyHabits).length === 0 && (
                                             <div className="p-12 text-center text-slate-400 italic">
                                                 No {view} habits found. Create one to get started!
@@ -352,7 +352,7 @@ export default function Dashboard() {
                                         {view === 'monthly' ? (
                                             dailyHabits.map(habit => (
                                                 <div key={habit._id} className="flex group transition-colors">
-                                                    <div className="w-48 md:w-80 flex-none p-4 pl-6 flex items-center justify-between sticky left-0 bg-white dark:bg-slate-800 border-r border-slate-100 dark:border-slate-700 z-30 group-hover:bg-slate-50 dark:group-hover:bg-slate-700 transition-colors">
+                                                    <div className="w-48 md:w-80 flex-none p-4 pl-6 flex items-center justify-between sticky left-0 bg-white dark:bg-slate-800 border-r border-slate-100 dark:border-slate-700 z-30 shadow-none dark:shadow-[4px_0_24px_-4px_#020617] group-hover:bg-slate-50 dark:group-hover:bg-slate-800 transition-colors">
                                                         <div className="flex items-center gap-3 overflow-hidden">
                                                             <div
                                                                 className="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm"
@@ -402,7 +402,7 @@ export default function Dashboard() {
                                         ) : (
                                             weeklyHabits.map(habit => (
                                                 <div key={habit._id} className="flex group transition-colors">
-                                                    <div className="w-48 md:w-80 flex-none p-4 pl-6 flex items-center justify-between sticky left-0 bg-white dark:bg-slate-800 border-r border-slate-100 dark:border-slate-700 z-30 group-hover:bg-slate-50 dark:group-hover:bg-slate-700 transition-colors">
+                                                    <div className="w-48 md:w-80 flex-none p-4 pl-6 flex items-center justify-between sticky left-0 bg-white dark:bg-slate-800 border-r border-slate-100 dark:border-slate-700 z-30 shadow-none dark:shadow-[4px_0_24px_-4px_#020617] group-hover:bg-slate-50 dark:group-hover:bg-slate-800 transition-colors">
                                                         <div className="flex items-center space-x-3 overflow-hidden">
                                                             <div className="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm" style={{ backgroundColor: habit.color, boxShadow: `0 0 12px ${habit.color}60` }} />
                                                             <span className="font-semibold text-slate-700 dark:text-slate-200 truncate text-sm">{habit.name}</span>
@@ -441,14 +441,14 @@ export default function Dashboard() {
 
                                     {/* Completion Row (Pills style) - Only for Monthly View */}
                                     {view === 'monthly' && dailyHabits.length > 0 && (
-                                        <div className="flex border-t border-slate-200 dark:border-slate-700 bg-slate-50/80 dark:bg-slate-900/80 sticky bottom-0 z-40 backdrop-blur-sm">
-                                            <div className="w-48 md:w-80 flex-none p-4 pl-6 flex items-center gap-3 sticky left-0 bg-slate-50 dark:bg-slate-900 z-50 border-r border-slate-200 dark:border-slate-700 shadow-[4px_0_24px_-4px_rgba(0,0,0,0.1)]">
+                                        <div className="flex border-t border-slate-200 dark:border-slate-700 bg-slate-50/80 dark:bg-slate-800 sticky bottom-0 z-40 backdrop-blur-sm">
+                                            <div className="w-48 md:w-80 flex-none p-4 pl-6 flex items-center gap-3 sticky left-0 bg-slate-50 dark:bg-slate-800 z-50 border-r border-slate-200 dark:border-slate-700 shadow-none dark:shadow-[4px_0_24px_-4px_#020617]">
                                                 <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
                                                     <Award size={18} />
                                                 </div>
-                                                <span className="font-bold text-xs text-slate-400 uppercase tracking-widest">Progress</span>
+                                                <span className="font-bold text-xs uppercase tracking-wider text-slate-400 dark:text-white">Progress</span>
                                             </div>
-                                            <div className="flex-1 flex px-4">
+                                            <div className="flex-1 flex px-4 items-center">
                                                 {dailyCompletionData.map(({ day, fullDate, percent }) => (
                                                     <div key={fullDate.toString()} className="flex-1 min-w-[40px] pt-4 pb-2 flex flex-col items-center justify-end border-r border-slate-200/50 last:border-0 group relative h-16">
                                                         <div className="w-1.5 bg-slate-200 rounded-full overflow-hidden flex flex-col justify-end h-full mb-1">
@@ -472,7 +472,7 @@ export default function Dashboard() {
 
                         {/* --- SUMMARY SECTION --- */}
                         < div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20" >
-                            <div className="bg-white dark:bg-slate-800 p-6 border border-slate-200 dark:border-slate-700 rounded-3xl shadow-sm">
+                            <div className="bg-white dark:bg-slate-800 p-6 border border-slate-200 dark:border-slate-700 rounded-3xl shadow-sm dark:shadow-slate-900/30">
                                 <h3 className="text-slate-500 font-semibold text-sm mb-4">Consistency Leader</h3>
                                 {bestHabit ? (
                                     <div className="flex items-center gap-4">
@@ -492,7 +492,7 @@ export default function Dashboard() {
                                 )}
                             </div>
 
-                            <div className="bg-white dark:bg-slate-800 p-6 border border-slate-200 dark:border-slate-700 rounded-3xl shadow-sm">
+                            <div className="bg-white dark:bg-slate-800 p-6 border border-slate-200 dark:border-slate-700 rounded-3xl shadow-sm dark:shadow-slate-900/30">
                                 <h3 className="text-slate-500 font-semibold text-sm mb-4">Month Progress</h3>
                                 <div className="flex items-end gap-2 mb-2">
                                     <span className="text-3xl font-bold">{monthProgress}%</span>
@@ -503,7 +503,7 @@ export default function Dashboard() {
                                 </div>
                             </div>
 
-                            <div className="bg-emerald-500 p-6 rounded-3xl shadow-lg shadow-emerald-100 text-white relative overflow-hidden">
+                            <div className="bg-emerald-500 p-6 rounded-3xl shadow-xl shadow-emerald-500/20 text-white relative overflow-hidden">
                                 <div className="relative z-10">
                                     <h3 className="text-emerald-50 font-semibold text-sm mb-4">Weekly Goal</h3>
                                     <p className="text-xl font-bold mb-4">

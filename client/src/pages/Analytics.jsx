@@ -39,7 +39,7 @@ export default function Analytics() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-8">
                         <Link to="/dashboard" className="flex items-center gap-2 group">
-                            <img src={logo} alt="Hobbithy" className="w-8 h-8 rounded-lg object-cover shadow-lg shadow-emerald-100 group-hover:rotate-12 transition-transform duration-300" />
+                            <img src={logo} alt="Hobbithy" className="w-8 h-8 rounded-lg object-cover shadow-sm group-hover:rotate-12 transition-transform duration-300" />
                             <span className="font-bold text-lg tracking-tight text-slate-900 dark:text-white hidden sm:block">Hobbithy</span>
                         </Link>
 
@@ -161,7 +161,7 @@ function StatsCard({ icon: Icon, title, value, color }) {
             animate={{ opacity: 1, scale: 1 }}
             className="bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 flex items-center gap-6 group hover:shadow-md transition-shadow"
         >
-            <div className={`w-16 h-16 rounded-2xl ${color} flex items-center justify-center text-white shadow-lg shadow-gray-200 group-hover:scale-110 transition-transform`}>
+            <div className={`w-16 h-16 rounded-2xl ${color} flex items-center justify-center text-white shadow-sm group-hover:scale-110 transition-transform`}>
                 <Icon size={32} />
             </div>
             <div>

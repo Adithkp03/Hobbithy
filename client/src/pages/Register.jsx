@@ -24,13 +24,13 @@ export default function Register() {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-12 sm:px-6 lg:px-8">
-            <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-xl">
+        <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-900 transition-colors duration-300 px-4 py-12 sm:px-6 lg:px-8">
+            <div className="w-full max-w-md space-y-8 rounded-2xl bg-white dark:bg-slate-800 p-8 shadow-xl dark:shadow-slate-900/50 transition-colors duration-300">
                 <div>
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-slate-900">
+                    <h2 className="mt-6 text-center text-3xl font-extrabold text-slate-900 dark:text-white">
                         Create your account
                     </h2>
-                    <p className="mt-2 text-center text-sm text-slate-600">
+                    <p className="mt-2 text-center text-sm text-slate-600 dark:text-slate-400">
                         Or{' '}
                         <Link to="/login" className="font-medium text-primary-600 hover:text-primary-500">
                             sign in to your existing account
