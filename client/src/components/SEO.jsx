@@ -12,7 +12,7 @@ export default function SEO({
     const siteTitle = 'Hobbithy Tracker';
     const fullTitle = title ? `${title} | ${siteTitle}` : 'Hobbithy Tracker - Build Better Habits Daily';
     const metaDescription = description || 'Hobbithy is the world\'s first resilient habit tracker. Build habits that survive your bad days with Adaptive Goal Technology.';
-    const siteUrl = url || 'https://hobbithy.com'; // Replace with actual domain when deployed
+    const siteUrl = url || 'https://hobbithy-tracker.vercel.app'; // Updated to actual Vercel domain
     const metaImage = image || '/og-image.jpg'; // Ensure this exists or use a remote URL
 
     return (
