@@ -226,7 +226,7 @@ export default function Dashboard() {
                                         }`}
                                 >
                                     <tab.icon size={16} />
-                                    {tab.label}
+                                    <span className="hidden sm:inline">{tab.label}</span>
                                 </button>
                             ))}
                             <button
@@ -234,7 +234,7 @@ export default function Dashboard() {
                                 className="flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all"
                             >
                                 <ListTodo size={16} />
-                                Tasks
+                                <span className="hidden sm:inline">Tasks</span>
                             </button>
                         </div>
                     </div>
@@ -248,7 +248,7 @@ export default function Dashboard() {
                         <ThemeToggle />
                         <div className="h-8 w-[1px] bg-slate-200 dark:bg-slate-800 hidden sm:block"></div>
                         <Link to="/analytics">
-                            <Button variant="ghost" className="hidden sm:flex items-center gap-2 text-slate-500 hover:text-emerald-600">
+                            <Button variant="ghost" className="flex items-center gap-2 text-slate-500 hover:text-emerald-600">
                                 <BarChart2 size={18} />
                             </Button>
                         </Link>
