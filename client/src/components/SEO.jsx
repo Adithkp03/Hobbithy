@@ -15,12 +15,25 @@ export default function SEO({
     const siteUrl = url || 'https://hobbithy-tracker.vercel.app'; // Updated to actual Vercel domain
     const metaImage = image || '/og-image.jpg'; // Ensure this exists or use a remote URL
 
+    const defaultKeywords = 'habit tracker, hobby tracker, daily habits, goal tracker, resilient habits, adaptive goals, productivity tool, routine builder';
+    const finalKeywords = keywords ? `${keywords}, ${defaultKeywords}` : defaultKeywords;
+
+    // Organization Schema for Logo display in Search Results
+    const organizationSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        'name': 'Hobbithy Tracker',
+        'url': 'https://hobbithy-tracker.vercel.app',
+        'logo': 'https://hobbithy-tracker.vercel.app/favicon.png',
+        'description': metaDescription
+    };
+
     return (
         <Helmet>
             {/* Standard Metadata */}
             <title>{fullTitle}</title>
             <meta name="description" content={metaDescription} />
-            {keywords && <meta name="keywords" content={keywords} />}
+            <meta name="keywords" content={finalKeywords} />
             <link rel="canonical" href={siteUrl} />
 
             {/* Open Graph / Facebook */}
@@ -36,7 +49,12 @@ export default function SEO({
             <meta name="twitter:description" content={metaDescription} />
             <meta name="twitter:image" content={metaImage} />
 
-            {/* JSON-LD Schema */}
+            {/* JSON-LD Schema - Organization (Logo) */}
+            <script type="application/ld+json">
+                {JSON.stringify(organizationSchema)}
+            </script>
+
+            {/* JSON-LD Schema - Page Specific */}
             {schema && (
                 <script type="application/ld+json">
                     {JSON.stringify(schema)}
