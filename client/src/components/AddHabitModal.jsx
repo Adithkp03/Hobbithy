@@ -21,8 +21,8 @@ export function AddHabitModal({ isOpen, onClose, onAdd }) {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
-            <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
-                <h2 className="text-xl font-bold text-slate-900 mb-4">Add New Habit</h2>
+            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-xl w-full max-w-md p-6 transition-colors duration-300">
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Add New Habit</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <Input
                         label="Habit Name"
@@ -34,18 +34,18 @@ export function AddHabitModal({ isOpen, onClose, onAdd }) {
                     />
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">Frequency</label>
-                        <div className="flex bg-slate-100 p-1 rounded-lg">
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Frequency</label>
+                        <div className="flex bg-slate-100 dark:bg-slate-700 p-1 rounded-lg transition-colors duration-300">
                             <button
                                 type="button"
-                                className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-colors ${frequency === 'daily' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-900'}`}
+                                className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-all ${frequency === 'daily' ? 'bg-white dark:bg-slate-600 text-slate-900 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                                 onClick={() => setFrequency('daily')}
                             >
                                 Daily
                             </button>
                             <button
                                 type="button"
-                                className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-colors ${frequency === 'weekly' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-900'}`}
+                                className={`flex-1 py-1.5 text-sm font-medium rounded-md transition-all ${frequency === 'weekly' ? 'bg-white dark:bg-slate-600 text-slate-900 dark:text-white shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                                 onClick={() => setFrequency('weekly')}
                             >
                                 Weekly
@@ -54,7 +54,7 @@ export function AddHabitModal({ isOpen, onClose, onAdd }) {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">Color</label>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Color</label>
                         <div className="flex flex-wrap gap-2">
                             {colors.map((c) => (
                                 <button

@@ -212,7 +212,7 @@ export default function Dashboard() {
                             <span className="font-bold text-lg tracking-tight text-slate-900 dark:text-white hidden sm:block">Hobbithy</span>
                         </div>
 
-                        <div className="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+                        <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
                             {[
                                 { id: 'monthly', icon: Calendar, label: 'Monthly' },
                                 { id: 'weekly', icon: Clock, label: 'Weekly' },
