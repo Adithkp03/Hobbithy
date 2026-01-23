@@ -63,14 +63,8 @@ const Hero = () => {
                 </div>
 
                 <h1 className="text-6xl md:text-8xl font-serif text-stone-900 dark:text-slate-50 leading-[0.95] mb-10 max-w-5xl mx-auto tracking-tight">
-                    Build habits that <br />
-                    <span className="text-emerald-700 italic font-medium relative">
-                        actually survive
-                        <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 15C50 5 150 5 295 15" stroke="#10b981" strokeWidth="4" strokeLinecap="round" opacity="0.3" />
-                        </svg>
-                    </span>
-                    &nbsp; your bad days.
+                    The Adaptive <span className="text-emerald-700 italic font-medium relative">Habit Tracker<svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 15C50 5 150 5 295 15" stroke="#10b981" strokeWidth="4" strokeLinecap="round" opacity="0.3" /></svg></span>
+                    <br /> That Builds Unbreakable Consistency.
                 </h1>
 
                 <p className="text-xl md:text-2xl text-stone-600 dark:text-stone-300 max-w-3xl mx-auto mb-12 leading-relaxed font-serif italic font-light">
@@ -103,7 +97,7 @@ const ResilienceSimulator = () => {
                 <div className="grid lg:grid-cols-2 gap-20 items-center">
                     <div className="space-y-8">
                         <h2 className="text-4xl md:text-5xl font-serif text-stone-900 leading-tight">
-                            See the <span className="text-emerald-600 italic">Adaptive</span> difference.
+                            Why Standard <span className="text-emerald-600 italic">Daily Habit Trackers</span> Fail You.
                         </h2>
                         <p className="text-stone-600 text-lg leading-relaxed">
                             In traditional apps, "Busy" or "Sick" days mean a broken streak. In Hobbithy, they are opportunities to earn <strong>Resilience Points</strong>. Toggle the buttons below to see how our algorithms adjust your daily targets.
@@ -185,7 +179,7 @@ const FeatureCard = ({ icon: Icon, title, description, badge }) => (
 const TrustSection = () => (
     <section className="py-20 bg-stone-50 dark:bg-slate-900 border-y border-stone-200/50 dark:border-slate-800 transition-colors duration-300 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 text-center">
-            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-stone-400 dark:text-slate-500 mb-10 transition-colors">Optimized for humans who value progress over perfection</h2>
+            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-stone-400 dark:text-slate-500 mb-10 transition-colors">A <span className="text-stone-600 dark:text-slate-300">Routine Tracker</span> Designed for Real Life</h2>
             <div className="flex flex-wrap justify-center gap-12 md:gap-24 opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
                 {['ProductHunt', 'Wired', 'TheVerge', 'Mindful', 'PsychologyToday'].map(brand => (
                     <span key={brand} className="text-2xl font-serif font-bold text-stone-900 dark:text-slate-400 cursor-default transition-colors">{brand}</span>
@@ -234,6 +228,50 @@ const Footer = () => (
     </footer>
 );
 
+const FAQSection = () => (
+    <section className="py-24 bg-stone-50 dark:bg-slate-900 border-t border-stone-200 dark:border-slate-800">
+        <div className="max-w-4xl mx-auto px-6">
+            <h2 className="text-4xl font-serif text-center font-bold text-stone-900 dark:text-white mb-16">
+                Frequently Asked Questions about our <span className="text-emerald-600 italic">Habit Building App</span>
+            </h2>
+            <div className="space-y-4">
+                {[
+                    {
+                        q: "What makes Hobbithy different from other habit trackers?",
+                        a: "Unlike traditional habit trackers that break your streak for one missed day, Hobbithy uses 'Adaptive Goal Technology.' It enables you to recover your streak through partial wins and adjusts daily targets based on your energy, making it the most resilient habit building app on the market."
+                    },
+                    {
+                        q: "Can I use Hobbithy as a hobby tracker?",
+                        a: "Absolutely. Hobbithy is designed as a flexible hobby tracker. Whether you are learning guitar, coding, or painting, you can track time-based or frequency-based goals specifically for your hobbies, ensuring you make consistent progress without pressure."
+                    },
+                    {
+                        q: "How does this app help with consistency?",
+                        a: "We focus on 'resilience metrics' rather than just streaks. As a consistency tracker, we measure how quickly you bounce back after a slump. This psychological shift removes the guilt of missing a day, which is the #1 reason people quit their daily habits."
+                    },
+                    {
+                        q: "Is this a free habit tracking app?",
+                        a: "Hobbithy offers a robust free tier that includes essential features like daily habit tracking, resilience scoring, and the basic routine tracker. We also offer premium features for advanced analytics and unlimited habits."
+                    },
+                    {
+                        q: "Can I track multiple routines?",
+                        a: "Yes. You can organize your life by categories. Use it as a morning routine tracker, a fitness log, or a work productivity tool all in one place. Our system keeps your daily habits organized so you can focus on doing, not managing."
+                    }
+                ].map((item, i) => (
+                    <details key={i} className="group bg-white dark:bg-slate-800 rounded-2xl border border-stone-100 dark:border-slate-700 open:shadow-lg transition-all duration-300">
+                        <summary className="flex justify-between items-center p-6 cursor-pointer list-none font-bold text-lg text-stone-800 dark:text-slate-100 marker:hidden">
+                            {item.q}
+                            <ArrowRight className="w-5 h-5 text-stone-400 group-open:rotate-90 transition-transform duration-300" />
+                        </summary>
+                        <div className="px-6 pb-6 text-stone-600 dark:text-slate-400 leading-relaxed">
+                            {item.a}
+                        </div>
+                    </details>
+                ))}
+            </div>
+        </div>
+    </section>
+);
+
 export default function LandingPage() {
     const navigate = useNavigate();
 
@@ -256,9 +294,9 @@ export default function LandingPage() {
 
             {/* SEO Configuration */}
             <SEO
-                title="Hobbithy Tracker - Build Better Habits Daily"
-                description="Hobbithy is the world's first resilient habit tracker using Adaptive Goal Technology. Build consistent habits with partial wins and recovery metrics, not just streaks."
-                keywords="habit tracker, resilience, personal growth, productivity, adaptive goals, habit recovery"
+                title="Habit Tracker for Resilience | Hobbithy Hobby & Goal Tracker"
+                description="Stop breaking streaks. Hobbithy is the adaptive habit tracker that adjusts to your energy. Build daily habits and consistency without burnout. Start free."
+                keywords="habit tracker, hobby tracker, daily habits, resilience, routine tracker, habit building app, consistency tracker"
                 video
                 schema={{
                     "@context": "https://schema.org",
@@ -287,6 +325,19 @@ export default function LandingPage() {
                 <Hero />
 
                 <TrustSection />
+
+                {/* Semantic Introduction Content */}
+                <section className="py-20 bg-white dark:bg-slate-900 border-b border-stone-100 dark:border-slate-800">
+                    <div className="max-w-3xl mx-auto px-6 text-center">
+                        <Sparkles className="w-8 h-8 text-emerald-500 mx-auto mb-6" />
+                        <h2 className="text-3xl font-serif font-bold text-stone-900 dark:text-white mb-6">
+                            The Adaptive <span className="text-emerald-600">Habit Tracker</span> for Real Life
+                        </h2>
+                        <p className="text-lg text-stone-600 dark:text-slate-300 leading-relaxed font-medium">
+                            Building a lasting routine isn't about perfection; it's about resilience. Hobbithy is more than just a standard <strong>habit tracker</strong>—it’s a dynamic system designed to help you master <strong>consistency</strong>. Whether you’re using it as a <strong>daily habit tracker</strong> for fitness or a dedicated <strong>hobby tracker</strong> for learning new skills, our adaptive engine learns from your behavior. Unlike a rigid <strong>routine tracker</strong> that punishes you for a missed day, Hobbithy acts as a compassionate <strong>habit building app</strong>, adjusting your goals based on your energy levels.
+                        </p>
+                    </div>
+                </section>
 
                 <section id="philosophy" className="py-32 bg-white dark:bg-slate-900 px-6 scroll-mt-20">
                     <div className="max-w-7xl mx-auto">
@@ -354,6 +405,8 @@ export default function LandingPage() {
                         </div>
                     </div>
                 </section>
+
+                <FAQSection />
             </main>
 
             <Footer />
