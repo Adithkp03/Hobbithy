@@ -6,6 +6,9 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/LandingPage';
 import Analytics from './pages/Analytics';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import CookiePolicy from './pages/CookiePolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
 import ReflectionsHistory from './pages/ReflectionsHistory';
 import { useContext } from 'react';
 import AuthContext from './context/AuthContext';
@@ -63,6 +66,9 @@ function App() {
                 }
               />
               <Route path="/" element={<LandingPage />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/cookie-policy" element={<CookiePolicy />} />
+              <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
             </Routes>
           </AuthProvider>
         </Router>

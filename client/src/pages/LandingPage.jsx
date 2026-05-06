@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import {
     ArrowRight,
@@ -191,7 +191,7 @@ const TrustSection = () => (
 
 const Footer = () => (
     <footer className="py-20 bg-stone-900 text-stone-400 px-6">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 mb-20">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-5 gap-12 mb-20">
             <div className="col-span-2 space-y-6">
                 <div className="flex items-center gap-2">
                     <img src={logo} alt="Hobbithy" className="w-8 h-8 rounded-lg object-cover" />
@@ -213,14 +213,23 @@ const Footer = () => (
                 <h4 className="text-white font-bold text-sm uppercase tracking-widest">Resources</h4>
                 <ul className="space-y-2 text-sm">
                     <li><a href="#" className="hover:text-emerald-400 transition-colors">Mindful Productivity</a></li>
-                    <li><a href="#" className="hover:text-emerald-400 transition-colors">Privacy Ethics</a></li>
                     <li><a href="#" className="hover:text-emerald-400 transition-colors">Support</a></li>
+                </ul>
+            </div>
+            <div className="space-y-4">
+                <h4 className="text-white font-bold text-sm uppercase tracking-widest">Legal</h4>
+                <ul className="space-y-2 text-sm">
+                    <li><Link to="/privacy-policy" className="hover:text-emerald-400 transition-colors">Privacy Policy</Link></li>
+                    <li><Link to="/cookie-policy" className="hover:text-emerald-400 transition-colors">Cookie Policy</Link></li>
+                    <li><Link to="/terms-and-conditions" className="hover:text-emerald-400 transition-colors">Terms and Conditions</Link></li>
                 </ul>
             </div>
         </div>
         <div className="max-w-7xl mx-auto pt-8 border-t border-stone-800 flex flex-col md:flex-row justify-between gap-4 text-xs font-bold tracking-widest uppercase">
             <p>© 2026 Hobbithy Inc. All rights reserved. Designed with empathy.</p>
             <div className="flex gap-8">
+                <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy</Link>
+                <Link to="/terms-and-conditions" className="hover:text-white transition-colors">Terms</Link>
                 <a href="#" className="hover:text-white transition-colors">Twitter</a>
                 <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
             </div>
